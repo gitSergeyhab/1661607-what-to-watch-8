@@ -1,6 +1,8 @@
 import FilmCard from '../film-card/film-card';
 import {MainHeader} from '../header/header';
 import {Film} from '../../types/types';
+import Navigation from '../navigation/navigation';
+import { GENRES } from '../../const';
 
 
 function Main({films, topFilm}: {films: Film[], topFilm: Film}): JSX.Element {
@@ -52,6 +54,8 @@ function Main({films, topFilm}: {films: Film[], topFilm: Film}): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
+
+          <Navigation selectedGenre={GENRES[2]}/>
 
 
           <div className="catalog__films-list">

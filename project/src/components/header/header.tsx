@@ -1,11 +1,15 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+
+
 function Logo(): JSX.Element {
   return (
     <div className="logo">
-      <a className="logo__link">
+      <Link className="logo__link" to={AppRoute.Main}>
         <span className="logo__letter logo__letter--1">W</span>
         <span className="logo__letter logo__letter--2">T</span>
         <span className="logo__letter logo__letter--3">W</span>
-      </a>
+      </Link>
     </div>
   );
 }
@@ -19,7 +23,7 @@ function SignOut(): JSX.Element {
         </div>
       </li>
       <li className="user-block__item">
-        <a className="user-block__link">Sign out</a>
+        <Link className="user-block__link" to={AppRoute.SignIn}>Sign out</Link>
       </li>
     </ul>
   );
@@ -32,7 +36,7 @@ function SignIn(): JSX.Element {
 function GuestOption(): JSX.Element {
   return (
     <div className="user-block">
-      <a href="sign-in.html" className="user-block__link">Sign in</a>
+      <Link className="user-block__link" to={AppRoute.SignIn}>Sign in</Link>
     </div>
   );
 }
@@ -49,7 +53,7 @@ function AddReviewOption(): JSX.Element{
           <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
         </li>
         <li className="breadcrumbs__item">
-          <a className="breadcrumbs__link">Add review</a>
+          <Link className="breadcrumbs__link" to={AppRoute.AddReview}>Add review</Link>
         </li>
       </ul>
     </nav>
