@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { Film } from '../../types/types';
 
 
 function Logo(): JSX.Element {
@@ -45,15 +46,15 @@ function MyListOption(): JSX.Element {
   return <h1 className="page-title user-page__title">My list</h1>;
 }
 
-function AddReviewOption(): JSX.Element{
+function AddReviewOption({film}: {film: Film}): JSX.Element{
   return (
     <nav className="breadcrumbs">
       <ul className="breadcrumbs__list">
         <li className="breadcrumbs__item">
-          <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
+          <Link to={`/films/${film.id}`} className="breadcrumbs__link">{film.name}</Link>
         </li>
         <li className="breadcrumbs__item">
-          <Link className="breadcrumbs__link" to={AppRoute.AddReview}>Add review</Link>
+          <a className="breadcrumbs__link" >Add review</a>
         </li>
       </ul>
     </nav>
@@ -61,11 +62,11 @@ function AddReviewOption(): JSX.Element{
 }
 
 
-function MainHeader(): JSX.Element {
+function MainHeader({authorizationStatus} : {authorizationStatus: AuthorizationStatus}): JSX.Element {
   return (
     <header className="page-header film-card__head">
       <Logo/>
-      <SignOut/>
+      {authorizationStatus === AuthorizationStatus.Auth ? <SignOut/> : <GuestOption/> }
     </header>
   );
 }
@@ -89,11 +90,11 @@ function GuestHeader(): JSX.Element {
   );
 }
 
-function AddReviewHeader(): JSX.Element {
+function AddReviewHeader({film}: {film: Film}): JSX.Element {
   return (
     <header className="page-header">
       <Logo/>
-      <AddReviewOption/>
+      <AddReviewOption film={film}/>
       <SignOut/>
     </header>
   );

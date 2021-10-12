@@ -1,6 +1,9 @@
 import {Film} from '../../types/types';
 import { getTimeInHoursAndMinutes } from '../../util';
 
+/* eslint-disable no-console */
+
+
 function StarInLine({star}: {star: string}) {
   return <>{star},<br /></>;
 }

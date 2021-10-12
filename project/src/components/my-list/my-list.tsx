@@ -1,4 +1,4 @@
-import FilmCard from '../film-card/film-card';
+import FilmList from '../film-list/film-list';
 import Footer from '../footer/footer';
 import {MyListHeader} from '../header/header';
 
@@ -15,7 +15,7 @@ function MyList({films}: {films: Film[]}): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
         <div className="catalog__films-list">
 
-          {films.map((film) => <FilmCard film={film} key={film.id}/>)}
+          <FilmList films={films}/>
 
         </div>
       </section>

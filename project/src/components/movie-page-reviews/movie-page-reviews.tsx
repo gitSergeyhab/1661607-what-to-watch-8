@@ -1,8 +1,10 @@
 import {Comment} from '../../types/types';
 import ReviewCard from '../review-card/review-card';
+/* eslint-disable no-console */
 
 
 function OneColumnReview({review}: {review: Comment}): JSX.Element {
+
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">

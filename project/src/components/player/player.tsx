@@ -1,9 +1,31 @@
-function Player(): JSX.Element {
+import { useHistory, useParams } from 'react-router';
+import { AuthorizationStatus } from '../../const';
+import { Film } from '../../types/types';
+import { getPlayerTiming } from '../../util';
+import NotFoundPage from '../not-found-page/not-found-page';
+
+function Player({films, authorizationStatus} : {films: Film[], authorizationStatus: AuthorizationStatus}): JSX.Element {
+
+  const history = useHistory();
+  const params: {id: string} = useParams();
+  const {id} = params;
+  const theFilm = films.find((film) => film.id === +id);
+
+  if (!theFilm) {
+    return <NotFoundPage authorizationStatus={authorizationStatus}/>;
+  }
+
+  const {runTime} = theFilm;
+
   return (
     <div className="player">
       <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <button
+        onClick={() => history.goBack()}
+        type="button" className="player__exit"
+      >Exit
+      </button>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -11,7 +33,7 @@ function Player(): JSX.Element {
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler" style={{left: '30%'}}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{getPlayerTiming(runTime)}</div>
         </div>
 
         <div className="player__controls-row">

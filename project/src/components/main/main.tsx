@@ -1,13 +1,18 @@
-import FilmCard from '../film-card/film-card';
 import {MainHeader} from '../header/header';
 import {Film} from '../../types/types';
-import Navigation from '../navigation/navigation';
-import { GENRES } from '../../const';
+import { useHistory } from 'react-router';
+import MainBottom from '../main-bottom/main-bottom';
+import { AuthorizationStatus } from '../../const';
 
 
-function Main({films, topFilm}: {films: Film[], topFilm: Film}): JSX.Element {
+type MainProps = {films: Film[], topFilm: Film, authorizationStatus: AuthorizationStatus}
 
-  const {name, posterImage, backgroundImage, genre, released} = topFilm;
+
+function Main({films, topFilm, authorizationStatus}: MainProps): JSX.Element {
+
+  const {name, posterImage, backgroundImage, genre, released, id} = topFilm;
+  const history = useHistory();
+
   return (
     <>
       <section className="film-card">
@@ -17,7 +22,7 @@ function Main({films, topFilm}: {films: Film[], topFilm: Film}): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <MainHeader/>
+        <MainHeader authorizationStatus={authorizationStatus}/>
 
         <div className="film-card__wrap">
           <div className="film-card__info">
@@ -33,7 +38,10 @@ function Main({films, topFilm}: {films: Film[], topFilm: Film}): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button
+                  onClick={() => history.push(`/player/${id}`)}
+                  className="btn btn--play film-card__button" type="button"
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -51,26 +59,8 @@ function Main({films, topFilm}: {films: Film[], topFilm: Film}): JSX.Element {
         </div>
       </section>
 
-      <div className="page-content">
-        <section className="catalog">
-          <h2 className="catalog__title visually-hidden">Catalog</h2>
+      <MainBottom films={films}/>
 
-          <Navigation selectedGenre={GENRES[2]}/>
-
-
-          <div className="catalog__films-list">
-
-            {films.map((film) => <FilmCard film={film} key={film.id}/>)}
-
-          </div>
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
-        </section>
-
-
-      </div>
     </>
   );
 }

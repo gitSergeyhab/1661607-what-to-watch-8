@@ -1,14 +1,14 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {MainHeader} from '../header/header';
 
-function NotFoundPage(): JSX.Element {
+function NotFoundPage({authorizationStatus} : {authorizationStatus: AuthorizationStatus}): JSX.Element {
 
   return (
     <div className="player" style={{backgroundColor: 'black'}}>
       <h1 className="visually-hidden">WTW</h1>
 
-      <MainHeader/>
+      <MainHeader authorizationStatus={authorizationStatus}/>
 
       <div style={{textAlign: 'center', color: 'orange'}}>
         <h2>
@@ -18,7 +18,7 @@ function NotFoundPage(): JSX.Element {
         </h2>
         <h3>
           <Link style={{color: 'orange'}} to={AppRoute.Main}>
-              Mane Page
+              Main Page
           </Link>
         </h3>
       </div>

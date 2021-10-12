@@ -1,23 +1,24 @@
+import { useParams } from 'react-router';
 import { Film } from '../../types/types';
 
 import {AddReviewHeader} from '../header/header';
+import CommentForm from '../comment-form/comment-form';
+import NotFoundPage from '../not-found-page/not-found-page';
+import { AuthorizationStatus } from '../../const';
+/* eslint-disable no-console */
 
 
-const STARS_COUNT = 10;
-
-function Star({score}: {score: string}): JSX.Element {
-  return (
-    <>
-      <input className="rating__input" id={`star-${score}`} type="radio" name="rating" value={score}/>
-      <label className="rating__label" htmlFor={`star-${score}`}>Rating {score}</label>
-    </>
-  );
-}
+function AddReview({films, authorizationStatus}: {films: Film[], authorizationStatus: AuthorizationStatus}): JSX.Element {
 
 
-function AddReview({film}: {film: Film}): JSX.Element {
+  const {id}: {id: string} = useParams();
 
-  const {name, backgroundImage, posterImage} = film;
+  const theFilm = films.find((film) => film.id === +id);
+
+  if (!theFilm) {
+    return <NotFoundPage authorizationStatus={authorizationStatus}/>;
+  }
+  const {name, backgroundImage, posterImage} = theFilm;
 
   return (
     <section className="film-card film-card--full">
@@ -28,7 +29,7 @@ function AddReview({film}: {film: Film}): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <AddReviewHeader/>
+        <AddReviewHeader film={theFilm}/>
 
         <div className="film-card__poster film-card__poster--small">
           <img src={posterImage} alt={name} width="218" height="327" />
@@ -36,23 +37,9 @@ function AddReview({film}: {film: Film}): JSX.Element {
       </div>
 
       <div className="add-review">
-        <form action="#" className="add-review__form">
-          <div className="rating">
-            <div className="rating__stars">
 
-              {new Array(10).fill(null).map((el, i) => <Star score={(STARS_COUNT-i).toString()} key={(STARS_COUNT-i).toString()} />)}
+        <CommentForm/>
 
-            </div>
-          </div>
-
-          <div className="add-review__text">
-            <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
-            <div className="add-review__submit">
-              <button className="add-review__btn" type="submit">Post</button>
-            </div>
-
-          </div>
-        </form>
       </div>
 
     </section>
