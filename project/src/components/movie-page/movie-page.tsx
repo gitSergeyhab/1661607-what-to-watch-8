@@ -1,67 +1,41 @@
 /* eslint-disable no-console */
 
-import {/*BrowserRouter, Switch, Route, */RouteProps, useParams, Link, useHistory /*useLocation*/} from 'react-router-dom';
+import {RouteProps, useParams, useHistory} from 'react-router-dom';
 
 import FilmList from '../film-list/film-list';
 import Footer from '../footer/footer';
-import MoviePageInList from '../movie-page-in-list/movie-page-in-list';
-import MoviePageDetails from '../movie-page-details/movie-page-details';
-import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
 import {MainHeader} from '../header/header';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 import {Comment, Film} from '../../types/types';
 import { MouseEvent } from 'react';
 import { AuthorizationStatus } from '../../const';
+import Tabs from '../tabs/tabs';
 
 
-const ACTIVE_OPTION_CLASS = 'film-nav__item--active';
+const ADD_REVIEW_END_PATH = 'review';
 
-const enum EndPathFilmPage {
-  Overview = 'overview',
-  Details = 'details',
-  Reviews = 'reviews',
-  AddReview = 'review'
-}
-
-
-type MainPageProps = RouteProps & {films: Film[], relatedFilms: Film[], comments: Comment[], authorizationStatus: AuthorizationStatus};
+type MainPageProps = RouteProps & {films: Film[], comments: Comment[], authorizationStatus: AuthorizationStatus};
 
 function MoviePage(props: MainPageProps): JSX.Element {
-  const {films, relatedFilms, comments, authorizationStatus} = props;
+  const {films, comments, authorizationStatus} = props;
 
   const filmParam: {id: string, option: string} = useParams();
   const history = useHistory();
 
-  const {id, option} = filmParam;
+  const {id} = filmParam;
   const film = films.find((item) => item.id === +id);
 
   if (!film) {
     return <NotFoundPage authorizationStatus={authorizationStatus}/>;
   }
 
+  const relatedFilms = films.filter((f) => film.genre === f.genre && film !== f).slice(0,4);
+
   const {name, genre, released, posterImage, backgroundImage} = film;
   const startPath = `/films/${id}`;
 
-  const addReviewPath = `${startPath}/${EndPathFilmPage.AddReview}`;
-  const reviewsPath = `${startPath}/${EndPathFilmPage.Reviews}`;
-  const detailsPath = `${startPath}/${EndPathFilmPage.Details}`;
-  const overviewPath = `${startPath}/${EndPathFilmPage.Overview}`;
-
-  let renderBlock: JSX.Element;
-  switch(option) {
-    case EndPathFilmPage.Overview:
-      renderBlock = <MoviePageInList film={film}/>;
-      break;
-    case EndPathFilmPage.Details:
-      renderBlock = <MoviePageDetails film={film}/>;
-      break;
-    case EndPathFilmPage.Reviews:
-      renderBlock = <MoviePageReviews reviews={comments}/>;
-      break;
-    default:
-      renderBlock = <MoviePageInList film={film}/>;
-  }
+  const addReviewPath = `${startPath}/${ADD_REVIEW_END_PATH}`;
 
   const handlePushToAddReview = (evt: MouseEvent<HTMLAnchorElement>): void => {
     evt.preventDefault();
@@ -119,21 +93,8 @@ function MoviePage(props: MainPageProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className={`film-nav__item ${option === EndPathFilmPage.Overview || !option ? ACTIVE_OPTION_CLASS : '' }`}>
-                    <Link to={overviewPath} className="film-nav__link">Overview</Link>
-                  </li>
-                  <li className={`film-nav__item ${option === EndPathFilmPage.Details ? ACTIVE_OPTION_CLASS : '' }`}>
-                    <Link to={detailsPath} className="film-nav__link">Details</Link>
-                  </li>
-                  <li className={`film-nav__item ${option === EndPathFilmPage.Reviews ? ACTIVE_OPTION_CLASS : '' }`}>
-                    <Link to={reviewsPath} className="film-nav__link">Reviews</Link>
-                  </li>
-                </ul>
-              </nav>
 
-              {renderBlock}
+              <Tabs film={film} comments={comments}/>
 
             </div>
           </div>

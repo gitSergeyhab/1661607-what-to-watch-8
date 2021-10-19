@@ -55,7 +55,7 @@ export default function App({films, comments, authorizationStatus}: AppProps): J
           />
         </Route>
         <Route exact path={AppRoute.Film}>
-          <MoviePage films={films} relatedFilms={films.slice(1,5)} comments={comments} authorizationStatus={authorizationStatus}/>
+          <MoviePage films={films} comments={comments} authorizationStatus={authorizationStatus}/>
         </Route>
 
         <Route exact path={AppRoute.Player}>
