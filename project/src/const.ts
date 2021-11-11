@@ -17,7 +17,8 @@ const enum AppRoute {
   Main = '/',
   SignIn = '/login',
   MyList = '/mylist',
-  Film = '/films/:id/:option?',
+  // Film = '/films/:id/:option?',
+  Film = '/films/:id',
   AddReview = '/films/:id/review',
   Player = '/player/:id',
 }

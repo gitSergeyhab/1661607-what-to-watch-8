@@ -10,22 +10,21 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import {Comment, Film} from '../../types/types';
 import { MouseEvent } from 'react';
 import { AuthorizationStatus } from '../../const';
-import MoviePageInfoBlock from '../movie-page-info-block/movie-page-info-block';
+import Tabs from '../movie-page-info-block/movie-page-info-block';
 
 
-const Path = { AddReview: 'review', Films: '/films'};
-
+const ADD_REVIEW_END_PATH = 'review';
 
 type MainPageProps = RouteProps & {films: Film[], comments: Comment[], authorizationStatus: AuthorizationStatus};
 
 function MoviePage(props: MainPageProps): JSX.Element {
   const {films, comments, authorizationStatus} = props;
 
-  const {id}: {id: string} = useParams();
+  const filmParam: {id: string, option: string} = useParams();
   const history = useHistory();
 
-
-  const film = films.find((item) => item.id === +id); // GET /films/: id
+  const {id} = filmParam;
+  const film = films.find((item) => item.id === +id);
 
   if (!film) {
     return <NotFoundPage authorizationStatus={authorizationStatus}/>;
@@ -34,10 +33,11 @@ function MoviePage(props: MainPageProps): JSX.Element {
   const relatedFilms = films.filter((f) => film.genre === f.genre && film !== f).slice(0,4); // GET /films/: id/similar
 
   const {name, genre, released, posterImage, backgroundImage} = film;
+  const startPath = `/films/${id}`;
 
-  const addReviewPath = `${Path.Films}/${id}/${Path.AddReview}`;
+  const addReviewPath = `${startPath}/${ADD_REVIEW_END_PATH}`;
 
-  const handleAddReviewClick = (evt: MouseEvent<HTMLElement>): void => {
+  const handlePushToAddReview = (evt: MouseEvent<HTMLAnchorElement>): void => {
     evt.preventDefault();
     history.push(addReviewPath);
   };
@@ -79,7 +79,7 @@ function MoviePage(props: MainPageProps): JSX.Element {
                   <span>My list</span>
                 </button>
 
-                <a href='/' onClick={handleAddReviewClick} className="btn film-card__button">Add review</a>
+                <a href='/' onClick={handlePushToAddReview} className="btn film-card__button">Add review</a>
 
               </div>
             </div>
@@ -94,7 +94,7 @@ function MoviePage(props: MainPageProps): JSX.Element {
 
             <div className="film-card__desc">
 
-              <MoviePageInfoBlock film={film} comments={comments}/>
+              <Tabs film={film} comments={comments}/>
 
             </div>
           </div>

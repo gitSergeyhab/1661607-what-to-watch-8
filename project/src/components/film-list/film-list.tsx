@@ -7,7 +7,7 @@ import MediaElement from '../media-element/media-element';
 
 function FilmList({films}: {films: Film[]}): JSX.Element {
 
-  const [activefilmid, setFilmId] = useState(-1);
+  const [activeFilmId, setFilmId] = useState(-1);
   const [format, setFormat] = useState('picture');
 
   let timeout: NodeJS.Timeout | null = null;
@@ -37,12 +37,12 @@ function FilmList({films}: {films: Film[]}): JSX.Element {
           film={film}
           key={film.id}
           format={format}
-          activefilmid={activefilmid}
+          id={activeFilmId}
         />))}
 
 
       {/* !!! DEL !!! */}
-      <h2>{ JSON.stringify(activefilmid)  }{format}</h2>
+      <h2>{ JSON.stringify(activeFilmId)  }{format}</h2>
 
     </>
   );

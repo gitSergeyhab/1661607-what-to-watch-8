@@ -1,5 +1,8 @@
 import { Film } from './types/types';
 
+const ALL_GENRES = 'All genres';
+const MAX_GENRE_NUMBER = 3;
+
 const getScoreDescription = (score: number): string => {
   if (score === 10) {
     return 'Awesome';
@@ -36,9 +39,13 @@ const getPlayerTiming = (runTime: number): string => {
   return `${hours}:${minutes}:00`;
 };
 
+const getUniqueFilmGenres = (films: Film[]) => ([...new Set(films.map((film) => film.genre))].sort());
+
 const getReviewDateFormat = (date: string): string =>  new Date(date).toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric'});
 
 const getFilmsByGenre = (films: Film[], genre: string): Film[] => genre ? films.filter((film) => film.genre === genre) : films;
+
+const getGenreList = (films: Film[]): string[] => [ALL_GENRES, ...getUniqueFilmGenres(films).slice(0, MAX_GENRE_NUMBER)];
 
 export {
   getScoreDescription,
@@ -46,5 +53,6 @@ export {
   getReviewDateFormat,
   disableReviewBtn,
   getPlayerTiming,
-  getFilmsByGenre
+  getFilmsByGenre,
+  getGenreList
 };

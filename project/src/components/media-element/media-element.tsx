@@ -7,15 +7,18 @@ type MediaElementProps = {
   onMouseLeave: () => void,
   onMouseEnter: () => void,
   format: string,
-  activefilmid: number,
+  id: number,
 }
 
 function MediaElement(props: MediaElementProps): JSX.Element {
   const {format, ...componentProps} = props;
-  const {film, activefilmid} = componentProps;
+  const {film, id} = componentProps;
 
-  const ThisComponent = format === 'video' && film.id === activefilmid ? VideoPlayer : FilmCard ;
-  return <ThisComponent {...componentProps} />;
+  if ('video' && film.id === id) {
+    return <VideoPlayer {...componentProps} />;
+  }
+
+  return  <FilmCard {...componentProps} />;
 }
 
 export default MediaElement;
