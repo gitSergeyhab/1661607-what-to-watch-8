@@ -3,12 +3,27 @@ import {Film} from '../../types/types';
 import { useHistory } from 'react-router';
 import MainBottom from '../main-bottom/main-bottom';
 import { AuthorizationStatus } from '../../const';
+import { useEffect } from 'react';
+import { bindActionCreators, Dispatch } from 'redux';
+import { getGenres } from '../../store/action';
+import { connect, ConnectedProps } from 'react-redux';
+import { State } from '../../store/reducer';
 
 
-type MainProps = {films: Film[], topFilm: Film, authorizationStatus: AuthorizationStatus}
+type MainProps = {topFilm: Film, authorizationStatus: AuthorizationStatus}
+
+const mapStateToProps = ({films, genres}: State) => ({films, genres});
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({getGenreList: getGenres}, dispatch);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type Props = ConnectedProps<typeof connector> & MainProps;
 
 
-function Main({films, topFilm, authorizationStatus}: MainProps): JSX.Element {
+function Main({topFilm, authorizationStatus, films, getGenreList}:  Props): JSX.Element {
+
+  useEffect(() => {
+    getGenreList(films);
+  }, [getGenreList, films]);
 
   const {name, posterImage, backgroundImage, genre, released, id} = topFilm;
   const history = useHistory();
@@ -65,5 +80,5 @@ function Main({films, topFilm, authorizationStatus}: MainProps): JSX.Element {
   );
 }
 
-export default Main;
+export default connector(Main) ;
 

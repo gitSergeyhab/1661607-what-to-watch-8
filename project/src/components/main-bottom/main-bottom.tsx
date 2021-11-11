@@ -1,9 +1,9 @@
 import { useState, MouseEvent } from 'react';
-import { GENRES } from '../../const';
+import { ALL_GENRES } from '../../const';
 import { Film } from '../../types/types';
 import { getFilmsByGenre } from '../../util';
 import FilmList from '../film-list/film-list';
-import Navigation from '../navigation/navigation';
+import MainGenres from '../main-genres/main-genres';
 /* eslint-disable no-console */
 
 const SHOWN_FILMS = 4;//8
@@ -13,17 +13,19 @@ function MainBottom({films} : {films: Film[]}): JSX.Element {
 
   const [filmCount, setFilmsCount] = useState(SHOWN_FILMS);
 
-  const [genre, setGenre] = useState(GENRES[0].data);
+  const [genre, setGenre] = useState(ALL_GENRES);
 
   const filmsByGenre = getFilmsByGenre(films, genre);
 
   const renderedFilms = filmsByGenre.slice(0, filmCount);
 
-  const handleSelectGenre = (evt: MouseEvent): void => {
+  const handleSelectGenre = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
-    const target = evt.target as HTMLAnchorElement;
-    const text = target.dataset.genre;
-    setGenre(text || GENRES[0].data);
+    const targetGenre = evt.currentTarget.dataset.genre;
+    if (targetGenre) {
+      setGenre(targetGenre);
+    }
+
     setFilmsCount(SHOWN_FILMS);
   };
 
@@ -32,7 +34,7 @@ function MainBottom({films} : {films: Film[]}): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <Navigation
+        <MainGenres
           selectedGenre={genre}
           onClick={handleSelectGenre}
         />

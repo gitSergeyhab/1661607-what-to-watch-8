@@ -171,6 +171,25 @@ const FILMS = [
     released: 2004,
     isFavorite: true,
   },
+  {
+    id: 10,
+    name: 'Revenant-Test',
+    posterImage: 'img/revenant-poster.jpg',
+    previewImage: 'img/revenant.jpg',
+    backgroundImage: 'img/revenant-bg.jpg',
+    backgroundColor: '#ffffff',
+    videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    previewVideoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustaves friend and protege.',
+    rating: 3.9,
+    scoresCount: 340,
+    director: 'Test Anderson',
+    starring: ['Test', 'Bill Murray', 'Edward Norton', 'Jude Law', 'Willem Dafoe', 'Saoirse Ronan'],
+    runTime: 99,
+    genre: 'Test-Thriller',
+    released: 0,
+    isFavorite: true,
+  },
 ];
 
 

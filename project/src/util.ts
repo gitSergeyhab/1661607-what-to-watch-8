@@ -1,7 +1,6 @@
+import { ALL_GENRES, MAX_GENRE_NUMBER } from './const';
 import { Film } from './types/types';
 
-const ALL_GENRES = 'All genres';
-const MAX_GENRE_NUMBER = 3;
 
 const getScoreDescription = (score: number): string => {
   if (score === 10) {
@@ -43,7 +42,7 @@ const getUniqueFilmGenres = (films: Film[]) => ([...new Set(films.map((film) => 
 
 const getReviewDateFormat = (date: string): string =>  new Date(date).toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric'});
 
-const getFilmsByGenre = (films: Film[], genre: string): Film[] => genre ? films.filter((film) => film.genre === genre) : films;
+const getFilmsByGenre = (films: Film[], genre: string): Film[] => genre && genre !== ALL_GENRES ? films.filter((film) => film.genre === genre) : films;
 
 const getGenreList = (films: Film[]): string[] => [ALL_GENRES, ...getUniqueFilmGenres(films).slice(0, MAX_GENRE_NUMBER)];
 

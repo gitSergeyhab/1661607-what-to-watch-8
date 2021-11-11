@@ -4,28 +4,31 @@ import { useEffect, useState } from 'react';
 import MediaElement from '../media-element/media-element';
 /* eslint-disable no-console */
 
+const CardFormat = {
+  Picture: 'picture',
+  Video: 'video',
+};
+
 
 function FilmList({films}: {films: Film[]}): JSX.Element {
 
   const [activeFilmId, setFilmId] = useState(-1);
-  const [format, setFormat] = useState('picture');
+  const [format, setFormat] = useState(CardFormat.Picture);
 
-  let timeout: NodeJS.Timeout | null = null;
+  let timeout = setTimeout(() => setFormat(CardFormat.Picture), 0);
+
 
   const onMouseEnter = (film: Film): void => {
     setFilmId(film.id);
-    timeout = setTimeout(() => setFormat('video'), 1000);
-    // setFormat('video');
+    timeout = setTimeout(() => setFormat(CardFormat.Video), 1000);
   };
   const onMouseLeave = (): void => {
     setFilmId(-1);
-    setFormat('picture');
+    setFormat(CardFormat.Picture);
   };
 
-  useEffect(() => function cleanup () {
-    if (timeout) {
-      clearTimeout(timeout);
-    }
+  useEffect(() => function cleanup() {
+    clearTimeout(timeout);
   }, [timeout]);
 
   return (

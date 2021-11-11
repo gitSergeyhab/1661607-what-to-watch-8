@@ -1,17 +1,3 @@
-// const GENRES = ['All genres', 'Comedies', 'Crime', 'Documentary', 'Dramas', 'Horror', 'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'];
-
-const GENRES = [
-  {title: 'All genres', data: ''},
-  {title: 'Comedies', data: 'Comedy'},
-  {title: 'Crime', data: 'Crime'},
-  {title: 'Documentary', data: 'Documentary'},
-  {title: 'Dramas', data: 'Drama'},
-  {title: 'Horror', data: 'Horror'},
-  {title: 'Kids & Family', data: 'Kids & Family'},
-  {title: 'Romance',data: 'Romance'},
-  {title: 'Sci-Fi', data: 'Sci-Fi'},
-  {title: 'Thrillers', data: 'Thriller'},
-];
 
 const enum AppRoute {
   Main = '/',
@@ -28,4 +14,12 @@ const enum AuthorizationStatus {
   NoAuth = 'NoAuth'
 }
 
-export {GENRES, AppRoute, AuthorizationStatus};
+const ALL_GENRES = 'All genres';
+const MAX_GENRE_NUMBER = 15;
+
+export {
+  AppRoute,
+  AuthorizationStatus,
+  ALL_GENRES,
+  MAX_GENRE_NUMBER
+};

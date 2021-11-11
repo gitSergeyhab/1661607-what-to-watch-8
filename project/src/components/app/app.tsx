@@ -24,7 +24,9 @@ export default function App({films, comments, authorizationStatus}: AppProps): J
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <Main films={films} topFilm={films[0]} authorizationStatus={authorizationStatus}/>
+          {/* <Main films={films} topFilm={films[0]} authorizationStatus={authorizationStatus}/> */}
+          <Main topFilm={films[0]} authorizationStatus={authorizationStatus}/>
+
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <SignIn/>
