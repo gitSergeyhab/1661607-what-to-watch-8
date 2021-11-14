@@ -1,4 +1,3 @@
-import {MainHeader} from '../header/header';
 import {Film} from '../../types/types';
 import { useHistory } from 'react-router';
 import MainBottom from '../main-bottom/main-bottom';
@@ -8,6 +7,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { getGenres } from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../store/reducer';
+import MainHeader from '../header/main-header/main-header';
 
 
 type MainProps = {topFilm: Film, authorizationStatus: AuthorizationStatus}

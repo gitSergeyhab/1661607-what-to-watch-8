@@ -1,8 +1,8 @@
 import FilmList from '../film-list/film-list';
 import Footer from '../footer/footer';
-import {MyListHeader} from '../header/header';
 
 import { Film } from '../../types/types';
+import MyListHeader from '../header/my-list-header/my-list-header';
 
 
 function MyList({films}: {films: Film[]}): JSX.Element {

@@ -1,4 +1,4 @@
-import {SignInHeader} from '../header/header';
+import SignInHeader from '../header/sign-in-header/sign-in-header';
 
 function SignInProto({optionalBlock}: {optionalBlock: JSX.Element|string}): JSX.Element {
   return (

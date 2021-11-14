@@ -6,7 +6,6 @@ import App from './components/app/app';
 import { AuthorizationStatus } from './const';
 import {FILMS, COMMENTS} from './mocks';
 import { reducer } from './store/reducer';
-// import { Film } from './types/types';
 import { getGenreList } from './util';
 
 /* eslint-disable no-console */

@@ -4,16 +4,31 @@ import {RouteProps, useParams, useHistory} from 'react-router-dom';
 
 import FilmList from '../film-list/film-list';
 import Footer from '../footer/footer';
-import {MainHeader} from '../header/header';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 import {Comment, Film} from '../../types/types';
 import { MouseEvent } from 'react';
-import { AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import MoviePageInfoBlock from '../movie-page-info-block/movie-page-info-block';
+import MainHeader from '../header/main-header/main-header';
 
 
-const Path = { AddReview: 'review', Films: '/films'};
+const Path = {AddReview: 'review', Films: '/films', Player: '/player'};
+
+
+function AddReviewBtn({id}: {id: string}): JSX.Element {
+
+  const history = useHistory();
+  const addReviewPath = `${Path.Films}/${id}/${Path.AddReview}`;
+
+  const handleAddReviewClick = (evt: MouseEvent<HTMLElement>): void => {
+    evt.preventDefault();
+    history.push(addReviewPath);
+  };
+
+
+  return <a href='/' onClick={handleAddReviewClick} className="btn film-card__button">Add review</a>;
+}
 
 
 type MainPageProps = RouteProps & {films: Film[], comments: Comment[], authorizationStatus: AuthorizationStatus};
@@ -23,6 +38,18 @@ function MoviePage(props: MainPageProps): JSX.Element {
 
   const {id}: {id: string} = useParams();
   const history = useHistory();
+  const playerPath = `${Path.Player}/${id}`;
+
+
+  const handleBtnMyListClick = () => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      console.log('add');
+    } else {
+      history.push(AppRoute.SignIn);
+    }
+  };
+
+  const handleBtnPlayClick = () => history.push(playerPath);
 
 
   const film = films.find((item) => item.id === +id); // GET /films/: id
@@ -35,12 +62,6 @@ function MoviePage(props: MainPageProps): JSX.Element {
 
   const {name, genre, released, posterImage, backgroundImage} = film;
 
-  const addReviewPath = `${Path.Films}/${id}/${Path.AddReview}`;
-
-  const handleAddReviewClick = (evt: MouseEvent<HTMLElement>): void => {
-    evt.preventDefault();
-    history.push(addReviewPath);
-  };
 
   return (
     <>
@@ -63,23 +84,24 @@ function MoviePage(props: MainPageProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button
-                  onClick={() => history.push(`/player/${id}`)}
-                  className="btn btn--play film-card__button" type="button"
+                <button className="btn btn--play film-card__button" type="button"
+                  onClick={handleBtnPlayClick}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
+                <button className="btn btn--list film-card__button" type="button"
+                  onClick={handleBtnMyListClick}
+                >
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                 </button>
 
-                <a href='/' onClick={handleAddReviewClick} className="btn film-card__button">Add review</a>
+                {authorizationStatus === AuthorizationStatus.Auth && <AddReviewBtn id={id}/>}
 
               </div>
             </div>

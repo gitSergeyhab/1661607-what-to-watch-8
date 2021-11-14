@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {MainHeader} from '../header/header';
+import MainHeader from '../header/main-header/main-header';
 
 function NotFoundPage({authorizationStatus} : {authorizationStatus: AuthorizationStatus}): JSX.Element {
 

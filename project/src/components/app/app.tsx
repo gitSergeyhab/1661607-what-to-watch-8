@@ -33,13 +33,6 @@ export default function App({films, comments, authorizationStatus}: AppProps): J
         </Route>
         <Route exact path={AppRoute.MyList}>
 
-          {/* <PrivateRoute
-            exact
-            path={AppRoute.MyList}
-            authorizationStatus={AuthorizationStatus.NoAuth}
-            render={() => <MyList films={FILMS}/>}
-          /> */}
-
           <PrivateRoute
             exact
             path={AppRoute.MyList}

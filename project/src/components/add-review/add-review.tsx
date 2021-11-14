@@ -1,10 +1,10 @@
 import { useParams } from 'react-router';
 import { Film } from '../../types/types';
 
-import {AddReviewHeader} from '../header/header';
 import CommentForm from '../comment-form/comment-form';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { AuthorizationStatus } from '../../const';
+import AddReviewHeader from '../header/add-review-header/add-review-header';
 /* eslint-disable no-console */
 
 
@@ -29,7 +29,7 @@ function AddReview({films, authorizationStatus}: {films: Film[], authorizationSt
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <AddReviewHeader film={theFilm}/>
+        <AddReviewHeader authorizationStatus={authorizationStatus} film={theFilm}/>
 
         <div className="film-card__poster film-card__poster--small">
           <img src={posterImage} alt={name} width="218" height="327" />
