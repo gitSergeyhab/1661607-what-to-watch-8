@@ -1,4 +1,3 @@
-import { AuthorizationStatus } from '../../../const';
 import Logo from '../header-components/logo/logo';
 import UserBlock from '../header-components/user-block/user-block';
 
@@ -11,7 +10,7 @@ export default function MyListHeader(): JSX.Element {
     <header className="page-header user-page__head">
       <Logo/>
       <MyListOption/>
-      <UserBlock authorizationStatus={AuthorizationStatus.Auth}/>
+      <UserBlock authorizationStatus/>
     </header>
   );
 }

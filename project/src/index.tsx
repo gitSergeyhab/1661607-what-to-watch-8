@@ -1,27 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
 import App from './components/app/app';
-import { AuthorizationStatus } from './const';
-import {FILMS, COMMENTS} from './mocks';
-import { reducer } from './store/reducer';
-import { getGenreList } from './util';
-
+import {COMMENTS} from './mocks';
+import { createAPI } from './services/api';
+import { requireLogout } from './store/action';
+import { checkAuthStatus, fetchFilmsAction, fetchPromoAction } from './store/api-action';
+import { configureStore } from '@reduxjs/toolkit';
+import { rootReducer } from './store/root-reducer';
 /* eslint-disable no-console */
 
 
-fetch('https://8.react.pages.academy/wtw/films', {headers: {'X-Token' : 'React ....'}})
-  .then((r) => r.json())
-  .then((r) => getGenreList(r))
-  .then((r) => console.log(r));
+const api = createAPI(() => store.dispatch(requireLogout()));
 
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({thunk: {extraArgument: api}}),
+});
 
-const store = createStore(reducer);
+store.dispatch(checkAuthStatus());
+store.dispatch(fetchPromoAction());
+store.dispatch(fetchFilmsAction());
 
 ReactDOM.render(
   <Provider store={store}>
-    <App films={FILMS} comments={COMMENTS} authorizationStatus={AuthorizationStatus.Auth}/>
+    <App comments={COMMENTS}/>
   </Provider>,
   document.getElementById('root'));
 

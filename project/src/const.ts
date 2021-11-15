@@ -8,17 +8,12 @@ const enum AppRoute {
   Player = '/player/:id',
 }
 
-const enum AuthorizationStatus {
-  Auth = 'Auth',
-  NoAuth = 'NoAuth'
-}
 
 const ALL_GENRES = 'All genres';
 const MAX_GENRE_NUMBER = 15;
 
 export {
   AppRoute,
-  AuthorizationStatus,
   ALL_GENRES,
   MAX_GENRE_NUMBER
 };

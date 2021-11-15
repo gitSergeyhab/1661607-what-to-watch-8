@@ -1,5 +1,6 @@
 import { MouseEvent } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getGenres } from '../../store/main-data/main-data-selectors';
 
 type MainGenresProps = {
   selectedGenre: string,
@@ -16,9 +17,11 @@ function Genre({selectedGenre, onClick, genre}: GenreProps): JSX.Element {
   );
 }
 
-const mapStateToProps = ({genres}:{genres: string[]}) => ({genres});
 
-function MainGenres({selectedGenre, genres, onClick}: MainGenresProps & {genres: string[]}): JSX.Element {
+function MainGenres({selectedGenre, onClick}: MainGenresProps): JSX.Element {
+
+  const genres = useSelector(getGenres);
+
   return (
     <ul className="catalog__genres-list">
       {genres.map((genre) => <Genre genre={genre} onClick={onClick} selectedGenre={selectedGenre} key={genre}/>)}
@@ -26,4 +29,5 @@ function MainGenres({selectedGenre, genres, onClick}: MainGenresProps & {genres:
   );
 }
 
-export default connect(mapStateToProps)(MainGenres);
+export default MainGenres;
+

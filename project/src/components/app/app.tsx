@@ -8,28 +8,38 @@ import SignIn from '../../components/sign-in/sign-in';
 import Player from '../player/player';
 import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-// import SignInMessage from '../../components/sign-in/sign-in-message';
-// import SignInError from '../../components/sign-in/sign-in-error';
-// import HeadGuest from '../../components/head-guest/head-guest';
+
+
 /* eslint-disable no-console */
 
 
-import {AppRoute, AuthorizationStatus} from '../../const';
-import { Comment, Film } from '../../types/types';
+import {AppRoute} from '../../const';
+import { Comment} from '../../types/types';
+import Spinner from '../spinner/spinner';
+import { useSelector } from 'react-redux';
+import { getFilmLoadedStatus, getFilms, getPromoLoadedStatus } from '../../store/main-data/main-data-selectors';
+import { getAuthStatus } from '../../store/user-data/user-data-selectors';
 
-type AppProps = {films: Film[], comments: Comment[], authorizationStatus: AuthorizationStatus}
 
-export default function App({films, comments, authorizationStatus}: AppProps): JSX.Element {
+function App({comments} : {comments: Comment[]}): JSX.Element {
+
+  const authorizationStatus = useSelector(getAuthStatus);
+  const areFilmsLoaded = useSelector(getFilmLoadedStatus);
+  const isPromoLoaded = useSelector(getPromoLoadedStatus);
+  const films = useSelector(getFilms);
+
+  if (!areFilmsLoaded || !isPromoLoaded) {
+    return <Spinner/>;
+  }
+
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          {/* <Main films={films} topFilm={films[0]} authorizationStatus={authorizationStatus}/> */}
-          <Main topFilm={films[0]} authorizationStatus={authorizationStatus}/>
-
+          <Main authorizationStatus={authorizationStatus}/>
         </Route>
         <Route exact path={AppRoute.SignIn}>
-          <SignIn/>
+          <SignIn authorizationStatus={authorizationStatus}/>
         </Route>
         <Route exact path={AppRoute.MyList}>
 
@@ -61,9 +71,8 @@ export default function App({films, comments, authorizationStatus}: AppProps): J
         </Route>
 
       </Switch>
-      {/* <HeadGuest/> */}
-      {/* <SignInError/> */}
-      {/* <SignInMessage/> */}
     </BrowserRouter>
   );
 }
+
+export default App;

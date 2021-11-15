@@ -3,12 +3,11 @@ import { Film } from '../../types/types';
 
 import CommentForm from '../comment-form/comment-form';
 import NotFoundPage from '../not-found-page/not-found-page';
-import { AuthorizationStatus } from '../../const';
 import AddReviewHeader from '../header/add-review-header/add-review-header';
 /* eslint-disable no-console */
 
 
-function AddReview({films, authorizationStatus}: {films: Film[], authorizationStatus: AuthorizationStatus}): JSX.Element {
+function AddReview({films, authorizationStatus}: {films: Film[], authorizationStatus: boolean}): JSX.Element {
 
 
   const {id}: {id: string} = useParams();

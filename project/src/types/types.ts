@@ -1,3 +1,8 @@
+import { AxiosInstance } from 'axios';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { RootState } from '../store/root-reducer';
+import { Action } from 'redux';
+
 export type Film = {
   id: number,
   name: string,
@@ -48,4 +53,10 @@ export type Comment = {
   comment: string,
   date: string,
 };
+
+export type State = RootState;
+
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;
+
+export type ThunkDispatchResult = ThunkDispatch<State, AxiosInstance, Action>
 

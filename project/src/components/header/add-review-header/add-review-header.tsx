@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { AuthorizationStatus } from '../../../const';
 import { Film } from '../../../types/types';
 import Logo from '../header-components/logo/logo';
 import UserBlock from '../header-components/user-block/user-block';
@@ -19,7 +18,7 @@ function Breadcrumbs({film}: {film: Film}): JSX.Element{
   );
 }
 
-export default function AddReviewHeader({film, authorizationStatus}: {film: Film, authorizationStatus: AuthorizationStatus}): JSX.Element {
+export default function AddReviewHeader({film, authorizationStatus}: {film: Film, authorizationStatus: boolean}): JSX.Element {
   return (
     <header className="page-header">
       <Logo/>

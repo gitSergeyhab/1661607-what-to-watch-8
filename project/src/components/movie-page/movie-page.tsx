@@ -8,7 +8,7 @@ import NotFoundPage from '../not-found-page/not-found-page';
 
 import {Comment, Film} from '../../types/types';
 import { MouseEvent } from 'react';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import MoviePageInfoBlock from '../movie-page-info-block/movie-page-info-block';
 import MainHeader from '../header/main-header/main-header';
 
@@ -31,7 +31,7 @@ function AddReviewBtn({id}: {id: string}): JSX.Element {
 }
 
 
-type MainPageProps = RouteProps & {films: Film[], comments: Comment[], authorizationStatus: AuthorizationStatus};
+type MainPageProps = RouteProps & {films: Film[], comments: Comment[], authorizationStatus: boolean};
 
 function MoviePage(props: MainPageProps): JSX.Element {
   const {films, comments, authorizationStatus} = props;
@@ -42,7 +42,7 @@ function MoviePage(props: MainPageProps): JSX.Element {
 
 
   const handleBtnMyListClick = () => {
-    if (authorizationStatus === AuthorizationStatus.Auth) {
+    if (authorizationStatus) {
       console.log('add');
     } else {
       history.push(AppRoute.SignIn);
@@ -101,7 +101,7 @@ function MoviePage(props: MainPageProps): JSX.Element {
                   <span>My list</span>
                 </button>
 
-                {authorizationStatus === AuthorizationStatus.Auth && <AddReviewBtn id={id}/>}
+                {authorizationStatus && <AddReviewBtn id={id}/>}
 
               </div>
             </div>

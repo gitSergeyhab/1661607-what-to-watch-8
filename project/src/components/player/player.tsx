@@ -1,10 +1,9 @@
 import { useHistory, useParams } from 'react-router';
-import { AuthorizationStatus } from '../../const';
 import { Film } from '../../types/types';
 import { getPlayerTiming } from '../../util';
 import NotFoundPage from '../not-found-page/not-found-page';
 
-function Player({films, authorizationStatus} : {films: Film[], authorizationStatus: AuthorizationStatus}): JSX.Element {
+function Player({films, authorizationStatus} : {films: Film[], authorizationStatus: boolean}): JSX.Element {
 
   const history = useHistory();
   const params: {id: string} = useParams();

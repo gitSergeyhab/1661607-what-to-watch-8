@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { getToken } from './token';
+import { getToken } from './auth-info';
 
 const BASE_URL = 'https://8.react.pages.academy/wtw';
 const TIMEOUT = 5000;
