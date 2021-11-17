@@ -14,23 +14,15 @@ import PrivateRoute from '../private-route/private-route';
 
 
 import {AppRoute} from '../../const';
-import { Comment} from '../../types/types';
-import Spinner from '../spinner/spinner';
 import { useSelector } from 'react-redux';
-import { getFilmLoadedStatus, getFilms, getPromoLoadedStatus } from '../../store/main-data/main-data-selectors';
+import { getFilms } from '../../store/main-data/main-data-selectors';
 import { getAuthStatus } from '../../store/user-data/user-data-selectors';
 
 
-function App({comments} : {comments: Comment[]}): JSX.Element {
+function App(): JSX.Element {
 
   const authorizationStatus = useSelector(getAuthStatus);
-  const areFilmsLoaded = useSelector(getFilmLoadedStatus);
-  const isPromoLoaded = useSelector(getPromoLoadedStatus);
   const films = useSelector(getFilms);
-
-  if (!areFilmsLoaded || !isPromoLoaded) {
-    return <Spinner/>;
-  }
 
   return (
     <BrowserRouter>
@@ -47,7 +39,7 @@ function App({comments} : {comments: Comment[]}): JSX.Element {
             exact
             path={AppRoute.MyList}
             authorizationStatus={authorizationStatus}
-            myList={<MyList films={films}/>}
+            privateComponent={<MyList/>}
           />
         </Route>
         <Route exact path={AppRoute.AddReview}>
@@ -56,11 +48,11 @@ function App({comments} : {comments: Comment[]}): JSX.Element {
             exact
             path={AppRoute.AddReview}
             authorizationStatus={authorizationStatus}
-            myList={<AddReview films={films} authorizationStatus={authorizationStatus}/>}
+            privateComponent={<AddReview authorizationStatus={authorizationStatus}/>}
           />
         </Route>
         <Route exact path={AppRoute.Film}>
-          <MoviePage films={films} comments={comments} authorizationStatus={authorizationStatus}/>
+          <MoviePage authorizationStatus={authorizationStatus}/>
         </Route>
 
         <Route exact path={AppRoute.Player}>

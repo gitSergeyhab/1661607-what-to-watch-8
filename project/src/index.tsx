@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
-import {COMMENTS} from './mocks';
 import { createAPI } from './services/api';
 import { requireLogout } from './store/action';
 import { checkAuthStatus, fetchFilmsAction, fetchPromoAction } from './store/api-action';
@@ -24,7 +23,7 @@ store.dispatch(fetchFilmsAction());
 
 ReactDOM.render(
   <Provider store={store}>
-    <App comments={COMMENTS}/>
+    <App/>
   </Provider>,
   document.getElementById('root'));
 

@@ -1,5 +1,5 @@
 
-import {getScoreDescription} from '../../util';
+import {getScoreDescription} from '../../util/util';
 import {Film} from '../../types/types';
 
 

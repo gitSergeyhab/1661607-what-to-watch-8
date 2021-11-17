@@ -1,69 +1,52 @@
-import { useState } from 'react';
-import {disableReviewBtn} from '../../util';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import CommentFormStars from '../comment-form-stars/comment-form-stars';
+import {disableReviewBtn} from '../../util/util';
+import CommentFormTextarea from '../comment-form-textarea/comment-form-textarea';
+import { useDispatch } from 'react-redux';
+import { postReviewAction } from '../../store/api-action';
 
-const STARS_COUNT = 10;
 
-
-function Star({score, stateScore, onChange}: {score: number, stateScore: number, onChange: ()=>void}): JSX.Element {
-
-  const id = `star-${score}`;
-
-  return (
-    <>
-      <input
-        onChange={onChange}
-        checked={stateScore === score}
-        className="rating__input" id={id} type="radio" name="rating" value={score}
-      />
-      <label className="rating__label" htmlFor={id}>Rating {score}</label>
-    </>
-  );
-}
-
-function CommentForm(): JSX.Element {
+function CommentForm({id}: {id: string}): JSX.Element {
 
   const [comment, setComment] = useState('');
-  const [starsCount, setStarsCount] = useState(0);
+  const [rating, setRating] = useState(0);
+  const [isFormBlocked, setFormBlock] = useState(false);
+
+  const clearReview = () => {
+    setComment('');
+    setRating(0);
+  };
+
+  const dispatch = useDispatch();
+
+  const handleFormSubmit = (evt: FormEvent) => {
+    evt.preventDefault();
+    setFormBlock(true);
+    dispatch(postReviewAction({id, rating, comment, unBlock: () => setFormBlock(false), clear: clearReview}));
+  };
+
+  const handleTextareaInput = (evt: FormEvent<HTMLTextAreaElement>) => setComment(evt.currentTarget.value);
+
+  const handleStarClick = (evt: ChangeEvent<HTMLInputElement>) => setRating(+evt.currentTarget.value);
 
   return (
     <form
       action="#" className="add-review__form"
-      onSubmit={(evt) => {
-        evt.preventDefault();
-        setComment('');
-        setStarsCount(0);
-      }}
+      onSubmit={handleFormSubmit}
     >
-      <div className="rating">
-        <div className="rating__stars">
-
-          {new Array(10).fill(null).map((el, i) => (
-            <Star
-              onChange={() => setStarsCount(STARS_COUNT-i)}
-              stateScore={starsCount}
-              score={STARS_COUNT-i}
-              key={(STARS_COUNT-i).toString()}
-            />))}
-
-        </div>
-      </div>
+      <CommentFormStars starsCount={rating} onChange={handleStarClick} disabled={isFormBlocked} />
 
       <div className="add-review__text">
-        <textarea
-          onChange={(evt) => {
-            evt.preventDefault();
-            setComment(evt.target.value);
-          }}
-          value={comment}
-          className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"
-        >
-        </textarea>
-        <div className="add-review__submit">
-          <button className="add-review__btn" type="submit" disabled={disableReviewBtn(comment, starsCount)}>Post</button>
-        </div>
 
+        <CommentFormTextarea comment={comment} onChange={handleTextareaInput} disabled={isFormBlocked}/>
+
+        <div className="add-review__submit">
+          <button className="add-review__btn" type="submit"
+            disabled={isFormBlocked || disableReviewBtn(comment, rating)}
+          >Post
+          </button>
+        </div>
       </div>
-      comment: {comment}. Stars: {starsCount}
     </form>
   );
 }

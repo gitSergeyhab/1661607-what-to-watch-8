@@ -1,7 +1,7 @@
 import { useState, MouseEvent } from 'react';
 import { ALL_GENRES } from '../../const';
 import { Film } from '../../types/types';
-import { getFilmsByGenre } from '../../util';
+import { getFilmsByGenre } from '../../util/util';
 import FilmList from '../film-list/film-list';
 import MainGenres from '../main-genres/main-genres';
 /* eslint-disable no-console */

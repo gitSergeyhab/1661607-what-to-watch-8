@@ -1,5 +1,16 @@
-import { ALL_GENRES, MAX_GENRE_NUMBER } from './const';
-import { Film } from './types/types';
+import { ALL_GENRES, MAX_GENRE_NUMBER } from '../const';
+import { Film } from '../types/types';
+
+
+const Re = {
+  NUMBER: /\d/,
+  LETTER: /[a-zа-я]/i,
+  EMAIL: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i,
+};
+
+const checkEmail = (email: string): boolean => Re.EMAIL.test(email);
+
+const checkPassword = (password: string): boolean => Re.NUMBER.test(password) && Re.LETTER.test(password);
 
 
 const getScoreDescription = (score: number): string => {
@@ -53,5 +64,7 @@ export {
   disableReviewBtn,
   getPlayerTiming,
   getFilmsByGenre,
-  getGenreList
+  getGenreList,
+  checkEmail,
+  checkPassword
 };

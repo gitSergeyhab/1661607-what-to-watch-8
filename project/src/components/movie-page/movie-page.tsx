@@ -1,16 +1,20 @@
 /* eslint-disable no-console */
 
-import {RouteProps, useParams, useHistory} from 'react-router-dom';
+import { useParams, useHistory} from 'react-router-dom';
 
 import FilmList from '../film-list/film-list';
 import Footer from '../footer/footer';
 import NotFoundPage from '../not-found-page/not-found-page';
 
-import {Comment, Film} from '../../types/types';
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect } from 'react';
 import { AppRoute } from '../../const';
 import MoviePageInfoBlock from '../movie-page-info-block/movie-page-info-block';
 import MainHeader from '../header/main-header/main-header';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCommentAction, fetchMovieAction, fetchSimilarAction } from '../../store/api-action';
+import { getComments, getMovie, getMovieLoadedStatus, getNeedSimilar } from '../../store/movie-data/movie-data-selectors';
+import { getMovieErrorStatus } from '../../store/error-status/error-status-selectors';
+import Spinner from '../spinner/spinner';
 
 
 const Path = {AddReview: 'review', Films: '/films', Player: '/player'};
@@ -26,19 +30,33 @@ function AddReviewBtn({id}: {id: string}): JSX.Element {
     history.push(addReviewPath);
   };
 
-
   return <a href='/' onClick={handleAddReviewClick} className="btn film-card__button">Add review</a>;
 }
 
 
-type MainPageProps = RouteProps & {films: Film[], comments: Comment[], authorizationStatus: boolean};
+type MainPageProps = {authorizationStatus: boolean};
 
-function MoviePage(props: MainPageProps): JSX.Element {
-  const {films, comments, authorizationStatus} = props;
+function MoviePage({authorizationStatus}: MainPageProps): JSX.Element {
 
   const {id}: {id: string} = useParams();
   const history = useHistory();
   const playerPath = `${Path.Player}/${id}`;
+
+  const dispatch = useDispatch();
+
+  const film = useSelector(getMovie);
+  const similar = useSelector(getNeedSimilar);
+  const comments = useSelector(getComments);
+  const error = useSelector(getMovieErrorStatus);
+  const isFilmLoaded = useSelector(getMovieLoadedStatus);
+  console.log(isFilmLoaded, 'isFilmLoaded');
+
+
+  useEffect(() => {
+    dispatch(fetchMovieAction(id));
+    dispatch(fetchCommentAction(id));
+    dispatch(fetchSimilarAction(id));
+  }, [dispatch, id]);
 
 
   const handleBtnMyListClick = () => {
@@ -52,13 +70,14 @@ function MoviePage(props: MainPageProps): JSX.Element {
   const handleBtnPlayClick = () => history.push(playerPath);
 
 
-  const film = films.find((item) => item.id === +id); // GET /films/: id
-
-  if (!film) {
+  if (error) {
     return <NotFoundPage authorizationStatus={authorizationStatus}/>;
   }
 
-  const relatedFilms = films.filter((f) => film.genre === f.genre && film !== f).slice(0,4); // GET /films/: id/similar
+  if (!film) {
+    return <Spinner/>;
+  }
+
 
   const {name, genre, released, posterImage, backgroundImage} = film;
 
@@ -129,7 +148,7 @@ function MoviePage(props: MainPageProps): JSX.Element {
 
           <div className="catalog__films-list">
 
-            <FilmList films={relatedFilms}/>
+            <FilmList films={similar}/>
 
           </div>
         </section>

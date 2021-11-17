@@ -1,6 +1,6 @@
 import { useHistory, useParams } from 'react-router';
 import { Film } from '../../types/types';
-import { getPlayerTiming } from '../../util';
+import { getPlayerTiming } from '../../util/util';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 function Player({films, authorizationStatus} : {films: Film[], authorizationStatus: boolean}): JSX.Element {

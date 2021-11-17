@@ -1,7 +1,7 @@
 import { adaptFilmToClient } from '../services/adapters';
 import { removeAvatar, removeToken, saveAvatar, saveToken } from '../services/auth-info';
 import { ServerFilm, ThunkActionResult } from '../types/types';
-import { getGenres, loadFilms, loadPromo, requireLogin, requireLogout } from './action';
+import { changeFavoriteErrorStatus, changeMainErrorStatus, changeMovieErrorStatus, changeMovieLoadedStatus, loadComments, loadFavorite, loadFilms, loadMovie, loadPromo, loadSimilar, requireLogin, requireLogout } from './action';
 
 const AVATAR_URL = 'avatar_url';
 
@@ -43,14 +43,75 @@ export const logoutAction = (): ThunkActionResult =>
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data} = await api.get<ServerFilm[]>(APIRoute.films);
-    const films = data.map((film) => adaptFilmToClient(film));
-    dispatch(loadFilms(films));
-    dispatch(getGenres(films));
+    try {
+      const {data} = await api.get<ServerFilm[]>(APIRoute.films);
+      const films = data.map((film) => adaptFilmToClient(film));
+      dispatch(loadFilms(films));
+      dispatch(changeMainErrorStatus(false));
+    } catch {
+      dispatch(changeMainErrorStatus(true));
+    }
   };
 
 export const fetchPromoAction = (): ThunkActionResult =>
   async(dispatch, _getState, api) => {
     const {data} = await api.get<ServerFilm>(APIRoute.promo);
     dispatch(loadPromo(adaptFilmToClient(data)));
+  };
+
+
+export const fetchMovieAction = (filmId: string): ThunkActionResult =>
+  async(dispatch, _getState, api) => {
+    try{
+      const {data} = await api.get(`${APIRoute.films}/${filmId}`);
+      dispatch(changeMovieLoadedStatus(false));
+      dispatch(loadMovie(adaptFilmToClient(data)));
+      dispatch(changeMovieErrorStatus(false));
+    } catch {
+      dispatch(changeMovieErrorStatus(true));
+    }
+  };
+
+
+export const fetchCommentAction = (filmId: string): ThunkActionResult =>
+  async(dispatch, _getState, api) => {
+    const {data} = await api.get(`${APIRoute.comments}/${filmId}`);
+    dispatch(loadComments(data));
+  };
+
+
+export const fetchSimilarAction = (filmId: string): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const path = `${APIRoute.films}/${filmId}${APIRoute.similar}`;
+    const {data} = await api.get<ServerFilm[]>(path);
+    const similar = data.map((film) => adaptFilmToClient(film));
+    dispatch(loadSimilar(similar));
+  };
+
+
+export const fetchFavoritesAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    try {
+      const {data} = await api.get<ServerFilm[]>(APIRoute.favorite);
+      const favorites = data.map((film) => adaptFilmToClient(film));
+      dispatch(loadFavorite(favorites));
+      dispatch(changeFavoriteErrorStatus(false));
+    } catch {
+      dispatch(changeFavoriteErrorStatus(false));
+    }
+  };
+
+
+type PostReview = {id: string, rating: number, comment: string, unBlock: () => void, clear: () => void}
+
+export const postReviewAction = ({id, rating, comment, unBlock, clear}: PostReview): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    try {
+      const {data} = await api.post(`${APIRoute.comments}/${id}`, {rating, comment});
+      dispatch(loadComments(data));
+      clear();
+    } catch {
+      console.log('error postReviewAction');
+    }
+    unBlock();
   };

@@ -1,5 +1,5 @@
 import {Film} from '../../types/types';
-import { getTimeInHoursAndMinutes } from '../../util';
+import { getTimeInHoursAndMinutes } from '../../util/util';
 
 /* eslint-disable no-console */
 
