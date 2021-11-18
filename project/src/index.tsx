@@ -7,6 +7,7 @@ import { requireLogout } from './store/action';
 import { checkAuthStatus, fetchFilmsAction, fetchPromoAction } from './store/api-action';
 import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './store/root-reducer';
+import { ToastContainer } from 'react-toastify';
 /* eslint-disable no-console */
 
 
@@ -23,6 +24,7 @@ store.dispatch(fetchFilmsAction());
 
 ReactDOM.render(
   <Provider store={store}>
+    <ToastContainer/>
     <App/>
   </Provider>,
   document.getElementById('root'));

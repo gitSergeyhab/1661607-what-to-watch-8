@@ -10,10 +10,16 @@ const enum AppRoute {
 
 
 const ALL_GENRES = 'All genres';
-const MAX_GENRE_NUMBER = 15;
+const MAX_GENRE_NUMBER = 10;
+
+const enum BtnLocation {
+  Promo = 'promo',
+  Movie = 'movie',
+}
 
 export {
   AppRoute,
+  BtnLocation,
   ALL_GENRES,
   MAX_GENRE_NUMBER
 };

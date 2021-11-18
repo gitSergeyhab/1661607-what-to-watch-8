@@ -7,11 +7,7 @@ function OneColumnReview({review}: {review: Comment}): JSX.Element {
 
   return (
     <div className="film-card__reviews film-card__row">
-      <div className="film-card__reviews-col">
-
-        <ReviewCard review={review}/>
-
-      </div>
+      <ReviewCard review={review}/>
     </div>
   );
 }
@@ -36,6 +32,7 @@ function TwoColumnsReviews({reviews}: {reviews: Comment[]}): JSX.Element {
   );
 }
 
+
 function MoviePageReviews({reviews}: {reviews: Comment[]}): JSX.Element {
 
   if (reviews.length === 1) {
@@ -46,7 +43,11 @@ function MoviePageReviews({reviews}: {reviews: Comment[]}): JSX.Element {
     return <TwoColumnsReviews reviews={reviews} />;
   }
 
-  return <span></span>;
+  return  (
+    <div className="film-card__reviews film-card__row">
+      <span style={{ margin: 'auto', color: 'black'}}>No Reviews ... </span>
+    </div>
+  );
 }
 
 export default MoviePageReviews;

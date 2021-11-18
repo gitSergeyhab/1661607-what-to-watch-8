@@ -1,14 +1,14 @@
-import { useHistory } from 'react-router';
 import { Film } from '../../types/types';
 import MainHeader from '../header/main-header/main-header';
-// import Spinner from '../spinner/spinner';
+import BtnMyList from '../btns/btn-my-list/btn-my-list';
+import BtnPlayer from '../btns/btn-player/btn-player';
+import { BtnLocation } from '../../const';
 
 type MAinPromoProps = {promo: Film, authorizationStatus: boolean}
 
 function MainPromo({promo, authorizationStatus}: MAinPromoProps): JSX.Element {
-  const history = useHistory();
 
-  const {name, posterImage, backgroundImage, genre, released, id} = promo;
+  const {name, posterImage, backgroundImage, genre, released, id, isFavorite} = promo;
 
   return (
     <section className="film-card">
@@ -34,21 +34,11 @@ function MainPromo({promo, authorizationStatus}: MAinPromoProps): JSX.Element {
             </p>
 
             <div className="film-card__buttons">
-              <button
-                onClick={() => history.push(`/player/${id}`)}
-                className="btn btn--play film-card__button" type="button"
-              >
-                <svg viewBox="0 0 19 19" width="19" height="19">
-                  <use xlinkHref="#play-s"></use>
-                </svg>
-                <span>Play</span>
-              </button>
-              <button className="btn btn--list film-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
-                </svg>
-                <span>My list</span>
-              </button>
+
+              <BtnPlayer id={id}/>
+
+              <BtnMyList authorizationStatus={authorizationStatus} id={id} isFavorite={isFavorite} location={BtnLocation.Promo}/>
+
             </div>
           </div>
         </div>
