@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import AddReview from '../../components/add-review/add-review';
@@ -23,45 +23,43 @@ function App(): JSX.Element {
   console.log('App');
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path={AppRoute.Main}>
-          <Main authorizationStatus={authorizationStatus}/>
-        </Route>
-        <Route exact path={AppRoute.SignIn}>
-          <SignIn authorizationStatus={authorizationStatus}/>
-        </Route>
-        <Route exact path={AppRoute.MyList}>
+    <Switch>
+      <Route exact path={AppRoute.Main}>
+        <Main authorizationStatus={authorizationStatus}/>
+      </Route>
+      <Route exact path={AppRoute.SignIn}>
+        <SignIn authorizationStatus={authorizationStatus}/>
+      </Route>
+      <Route exact path={AppRoute.MyList}>
 
-          <PrivateRoute
-            exact
-            path={AppRoute.MyList}
-            authorizationStatus={authorizationStatus}
-            privateComponent={<MyList/>}
-          />
-        </Route>
-        <Route exact path={AppRoute.AddReview}>
+        <PrivateRoute
+          exact
+          path={AppRoute.MyList}
+          authorizationStatus={authorizationStatus}
+          privateComponent={<MyList/>}
+        />
+      </Route>
+      <Route exact path={AppRoute.AddReview}>
 
-          <PrivateRoute
-            exact
-            path={AppRoute.AddReview}
-            authorizationStatus={authorizationStatus}
-            privateComponent={<AddReview authorizationStatus={authorizationStatus}/>}
-          />
-        </Route>
-        <Route exact path={AppRoute.Film}>
-          <MoviePage authorizationStatus={authorizationStatus}/>
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.AddReview}
+          authorizationStatus={authorizationStatus}
+          privateComponent={<AddReview authorizationStatus={authorizationStatus}/>}
+        />
+      </Route>
+      <Route exact path={AppRoute.Film}>
+        <MoviePage authorizationStatus={authorizationStatus}/>
+      </Route>
 
-        <Route exact path={AppRoute.Player}>
-          <Player/>
-        </Route>
-        <Route>
-          <NotFoundPage authorizationStatus={authorizationStatus}/>
-        </Route>
+      <Route exact path={AppRoute.Player}>
+        <Player/>
+      </Route>
+      <Route>
+        <NotFoundPage authorizationStatus={authorizationStatus}/>
+      </Route>
 
-      </Switch>
-    </BrowserRouter>
+    </Switch>
   );
 }
 

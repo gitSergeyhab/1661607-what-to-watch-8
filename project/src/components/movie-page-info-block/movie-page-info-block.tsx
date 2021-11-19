@@ -1,11 +1,9 @@
-/* eslint-disable no-console */
+import { MouseEvent, useState } from 'react';
 
-import MoviePageInList from '../movie-page-in-list/movie-page-in-list';
+import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
-
 import { Comment, Film } from '../../types/types';
-import { MouseEvent, useState } from 'react';
 
 const TabClass = {
   tab: 'film-nav__item',
@@ -19,14 +17,14 @@ const TabName = {
 };
 
 
-type TabProps = {tab: string, activeTab: string, handleTabClick: (evt: MouseEvent<HTMLLIElement>) => void}
+type TabProps = {tab: string, activeTab: string, onClick: (evt: MouseEvent<HTMLLIElement>) => void}
 
-function Tab({tab, activeTab, handleTabClick} : TabProps): JSX.Element {
+function Tab({tab, activeTab, onClick} : TabProps): JSX.Element {
 
   const classes = tab === activeTab ? `${TabClass.activeTab} ${TabClass.tab}` : TabClass.tab;
 
   return (
-    <li className={classes} data-tab={tab} onClick={handleTabClick}>
+    <li className={classes} data-tab={tab} onClick={onClick}>
       <a href="/" className="film-nav__link">{tab}</a>
     </li>
   );
@@ -46,7 +44,7 @@ function MoviePageInfoBlock({film, comments}: {film: Film, comments: Comment[]})
   };
 
 
-  let info = <MoviePageInList film={film}/>;
+  let info = <MoviePageOverview film={film}/>;
   switch(activeTab) {
     case TabName.Details:
       info = <MoviePageDetails film={film}/>;
@@ -56,7 +54,7 @@ function MoviePageInfoBlock({film, comments}: {film: Film, comments: Comment[]})
   }
 
   const tabList = Object.keys(TabName)
-    .map((tab) => <Tab tab={tab} activeTab={activeTab} key={tab} handleTabClick={handleTabClick}/>);
+    .map((tab) => <Tab tab={tab} activeTab={activeTab} key={tab} onClick={handleTabClick}/>);
 
   return (
     <>

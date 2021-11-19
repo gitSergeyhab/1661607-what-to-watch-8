@@ -1,5 +1,5 @@
 import { RouteProps, Route, Redirect } from 'react-router-dom';
-import {AppRoute} from '../../const';
+import { AppRoute } from '../../const';
 
 
 type PrivateRouteProps = RouteProps & {

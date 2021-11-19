@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import {  useHistory} from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
 
 
 const PATH_PLAYER = '/player/';

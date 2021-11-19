@@ -3,7 +3,7 @@ import { getScoreDescription } from '../../util/util';
 import { Film } from '../../types/types';
 
 
-function MoviePageInList({film}: {film: Film}): JSX.Element {
+function MoviePageOverview({film}: {film: Film}): JSX.Element {
 
   const {rating, scoresCount, description, director, starring} = film;
 
@@ -31,4 +31,4 @@ function MoviePageInList({film}: {film: Film}): JSX.Element {
   );
 }
 
-export default MoviePageInList;
+export default MoviePageOverview;

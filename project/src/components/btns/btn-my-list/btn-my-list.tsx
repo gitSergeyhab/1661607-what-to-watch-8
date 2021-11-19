@@ -3,7 +3,7 @@
 import { useHistory } from 'react-router-dom';
 import { AppRoute, BtnLocation } from '../../../const';
 import { useDispatch } from 'react-redux';
-import { postFilmStatusAction } from '../../../store/api-action';
+import { postFilmStatusAction } from '../../../store/api-actions';
 
 const LinkHref = {
   InList: '#in-list',

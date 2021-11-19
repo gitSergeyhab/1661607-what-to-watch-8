@@ -1,10 +1,11 @@
-import MainBottom from '../main-bottom/main-bottom';
 import { useSelector } from 'react-redux';
+
+import MainBottom from '../main-bottom/main-bottom';
 import MainPromo from '../main-promo/main-promo';
-import { getFilmsLoadedStatus, getFilms, getPromo } from '../../store/main-data/main-data-selectors';
-import { getMainErrorStatus } from '../../store/error-status/error-status-selectors';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Spinner from '../spinner/spinner';
+import { getFilmsLoadedStatus, getFilms, getPromo } from '../../store/main-data/main-data-selectors';
+import { getMainErrorStatus } from '../../store/error-status/error-status-selectors';
 
 
 type MainProps = {authorizationStatus: boolean}

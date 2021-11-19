@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { configureStore } from '@reduxjs/toolkit';
+import { ToastContainer } from 'react-toastify';
+
 import App from './components/app/app';
 import { createAPI } from './services/api';
 import { requireLogout } from './store/action';
-import { checkAuthStatus, fetchFilmsAction, fetchPromoAction } from './store/api-action';
-import { configureStore } from '@reduxjs/toolkit';
+import { checkAuthStatus, fetchFilmsAction, fetchPromoAction } from './store/api-actions';
 import { rootReducer } from './store/root-reducer';
-import { ToastContainer } from 'react-toastify';
-/* eslint-disable no-console */
 
 
 const api = createAPI(() => store.dispatch(requireLogout()));
@@ -23,9 +24,11 @@ store.dispatch(fetchPromoAction());
 store.dispatch(fetchFilmsAction());
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ToastContainer/>
-    <App/>
-  </Provider>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <ToastContainer/>
+      <App/>
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('root'));
 

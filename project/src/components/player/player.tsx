@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 
 import NotFoundPage from '../not-found-page/not-found-page';
-import { fetchMovieAction } from '../../store/api-action';
+import { fetchMovieAction } from '../../store/api-actions';
 import { getMovie } from '../../store/movie-data/movie-data-selectors';
 import { getMovieErrorStatus } from '../../store/error-status/error-status-selectors';
 import { getAuthVerifiedStatus } from '../../store/user-data/user-data-selectors';

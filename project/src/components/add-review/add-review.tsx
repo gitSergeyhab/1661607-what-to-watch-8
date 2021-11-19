@@ -1,19 +1,17 @@
 import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
+import AddReviewHeader from '../header/add-review-header/add-review-header';
 import CommentForm from '../comment-form/comment-form';
 import NotFoundPage from '../not-found-page/not-found-page';
-import AddReviewHeader from '../header/add-review-header/add-review-header';
-import { useDispatch, useSelector } from 'react-redux';
-import { getMovie } from '../../store/movie-data/movie-data-selectors';
-import { useEffect } from 'react';
-import { fetchMovieAction } from '../../store/api-action';
-import { getMovieErrorStatus } from '../../store/error-status/error-status-selectors';
 import Spinner from '../spinner/spinner';
-/* eslint-disable no-console */
+import { fetchMovieAction } from '../../store/api-actions';
+import { getMovie } from '../../store/movie-data/movie-data-selectors';
+import { getMovieErrorStatus } from '../../store/error-status/error-status-selectors';
 
 
 function AddReview({authorizationStatus}: {authorizationStatus: boolean}): JSX.Element {
-
 
   const {id}: {id: string} = useParams();
 
@@ -57,7 +55,6 @@ function AddReview({authorizationStatus}: {authorizationStatus: boolean}): JSX.E
         <CommentForm id={id}/>
 
       </div>
-
     </section>
   );
 }

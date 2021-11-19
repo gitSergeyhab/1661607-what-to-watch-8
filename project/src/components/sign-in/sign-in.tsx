@@ -1,12 +1,13 @@
 import { FormEvent, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
-import { AppRoute } from '../../const';
-import { loginAction } from '../../store/api-action';
-import { getAuthVerifiedStatus } from '../../store/user-data/user-data-selectors';
-import { checkEmail, checkPassword } from '../../util/util';
+
 import SignInHeader from '../header/sign-in-header/sign-in-header';
 import Spinner from '../spinner/spinner';
+import { AppRoute } from '../../const';
+import { loginAction } from '../../store/api-actions';
+import { getAuthVerifiedStatus } from '../../store/user-data/user-data-selectors';
+import { checkEmail, checkPassword } from '../../util/util';
 
 
 const ErrorElement = {

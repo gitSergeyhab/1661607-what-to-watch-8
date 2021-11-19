@@ -1,14 +1,14 @@
-import FilmList from '../film-list/film-list';
-import Footer from '../footer/footer';
-
-import MyListHeader from '../header/my-list-header/my-list-header';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchFavoritesAction } from '../../store/api-action';
-import { getFavorites, getFavoritesLoadedStatus } from '../../store/favorite-data/favorite-data-selector';
-import Spinner from '../spinner/spinner';
-import { getFavoriteErrorStatus } from '../../store/error-status/error-status-selectors';
+
+import FilmList from '../film-list/film-list';
+import Footer from '../footer/footer';
+import MyListHeader from '../header/my-list-header/my-list-header';
 import NotFoundPage from '../not-found-page/not-found-page';
+import Spinner from '../spinner/spinner';
+import { fetchFavoritesAction } from '../../store/api-actions';
+import { getFavorites, getFavoritesLoadedStatus } from '../../store/favorite-data/favorite-data-selector';
+import { getFavoriteErrorStatus } from '../../store/error-status/error-status-selectors';
 
 
 function MyList(): JSX.Element {
@@ -32,7 +32,6 @@ function MyList(): JSX.Element {
   }
 
   const emptyList = <p style={{margin: 'auto'}}>Your List is Empty</p>;
-
   const myList = favorites && favorites.length ? <FilmList films={favorites}/> : emptyList;
 
   return (

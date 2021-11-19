@@ -1,30 +1,25 @@
-/* eslint-disable no-console */
-
 import { useParams} from 'react-router-dom';
-
-import Footer from '../footer/footer';
-import NotFoundPage from '../not-found-page/not-found-page';
-
 import { useEffect } from 'react';
-import MoviePageInfoBlock from '../movie-page-info-block/movie-page-info-block';
-import MainHeader from '../header/main-header/main-header';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCommentAction, fetchMovieAction, fetchSimilarAction } from '../../store/api-action';
-import { getComments, getMovie, getMovieLoadedStatus } from '../../store/movie-data/movie-data-selectors';
-import { getMovieErrorStatus } from '../../store/error-status/error-status-selectors';
-import Spinner from '../spinner/spinner';
+
 import BtnMyList from '../btns/btn-my-list/btn-my-list';
 import BtnPlayer from '../btns/btn-player/btn-player';
 import BtnAddReview from '../btns/btn-add-review/btn-add-review';
-import { BtnLocation } from '../../const';
+import Footer from '../footer/footer';
+import MainHeader from '../header/main-header/main-header';
 import MoviePageSimilar from '../movie-page-similar/movie-page-similar';
+import MoviePageInfoBlock from '../movie-page-info-block/movie-page-info-block';
+import NotFoundPage from '../not-found-page/not-found-page';
+import Spinner from '../spinner/spinner';
+import { fetchCommentAction, fetchMovieAction, fetchSimilarAction } from '../../store/api-actions';
+import { getComments, getMovie, getMovieLoadedStatus } from '../../store/movie-data/movie-data-selectors';
+import { getMovieErrorStatus } from '../../store/error-status/error-status-selectors';
+import { BtnLocation } from '../../const';
 
 
 type MainPageProps = {authorizationStatus: boolean};
 
 function MoviePage({authorizationStatus}: MainPageProps): JSX.Element {
-
-  console.log('MoviePage');
 
   const {id}: {id: string} = useParams();
 

@@ -3,7 +3,7 @@ import { AppRoute } from '../../../../const';
 import { useHistory } from 'react-router';
 import { getAvatar } from '../../../../services/auth-info';
 import { useDispatch } from 'react-redux';
-import { logoutAction } from '../../../../store/api-action';
+import { logoutAction } from '../../../../store/api-actions';
 import { MouseEvent } from 'react';
 
 

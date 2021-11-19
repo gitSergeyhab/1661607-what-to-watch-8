@@ -4,7 +4,7 @@ import { adaptFilmToClient } from '../services/adapters';
 import { removeAvatar, removeToken, saveAvatar, saveToken } from '../services/auth-info';
 import { changeFavoriteErrorStatus, changeMainErrorStatus, changeMovieErrorStatus, changeMovieLoadedStatus, loadComments, loadFavorite, loadFilms, loadMovie, loadPromo, loadSimilar, requireLogin, requireLogout } from './action';
 import { ServerFilm, ThunkActionResult } from '../types/types';
-import { BtnLocation } from '../const';
+import { APIRoute, BtnLocation } from '../const';
 
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,15 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AVATAR_URL = 'avatar_url';
 
-const enum APIRoute {
-  films = '/films',
-  promo = '/promo',
-  similar = '/similar',
-  favorite = '/favorite',
-  comments = '/comments',
-  login = '/login',
-  logout = '/logout',
-}
 
 const ErrorMessage = {
   Login: 'unable to log in',
@@ -37,12 +28,13 @@ const ErrorMessage = {
 };
 
 
+//AUTH
 type AuthData = {email: string, password: string};
 
 export const checkAuthStatus = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
-      await api.get(APIRoute.login);
+      await api.get(APIRoute.Login);
       dispatch(requireLogin());
     } catch {
       dispatch(requireLogout());
@@ -52,7 +44,7 @@ export const checkAuthStatus = (): ThunkActionResult =>
 export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
-      const {data} =  await api.post(APIRoute.login, {email, password});
+      const {data} =  await api.post(APIRoute.Login, {email, password});
       const {token, [AVATAR_URL]: avatar} = data;
       saveToken(token);
       saveAvatar(avatar);
@@ -65,7 +57,7 @@ export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
 export const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
-      await api.delete(APIRoute.logout);
+      await api.delete(APIRoute.Logout);
       removeToken();
       removeAvatar();
       dispatch(requireLogout());
@@ -74,12 +66,12 @@ export const logoutAction = (): ThunkActionResult =>
     }
   };
 
-
+// MAIN
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
       dispatch(changeMainErrorStatus(false));
-      const {data} = await api.get<ServerFilm[]>(APIRoute.films);
+      const {data} = await api.get<ServerFilm[]>(APIRoute.Films);
       const films = data.map((film) => adaptFilmToClient(film));
       dispatch(loadFilms(films));
     } catch {
@@ -91,7 +83,7 @@ export const fetchFilmsAction = (): ThunkActionResult =>
 export const fetchPromoAction = (): ThunkActionResult =>
   async(dispatch, _getState, api) => {
     try {
-      const {data} = await api.get<ServerFilm>(APIRoute.promo);
+      const {data} = await api.get<ServerFilm>(APIRoute.Promo);
       dispatch(loadPromo(adaptFilmToClient(data)));
     } catch {
       toast.error(ErrorMessage.FetchPromo);
@@ -99,12 +91,13 @@ export const fetchPromoAction = (): ThunkActionResult =>
   };
 
 
+// MOVIE
 export const fetchMovieAction = (filmId: string): ThunkActionResult =>
   async(dispatch, _getState, api) => {
     try{
       dispatch(changeMovieErrorStatus(false));
       dispatch(changeMovieLoadedStatus(false));
-      const {data} = await api.get(`${APIRoute.films}/${filmId}`);
+      const {data} = await api.get(`${APIRoute.Films}/${filmId}`);
       dispatch(loadMovie(adaptFilmToClient(data)));
     } catch {
       dispatch(changeMovieErrorStatus(true));
@@ -112,22 +105,20 @@ export const fetchMovieAction = (filmId: string): ThunkActionResult =>
     }
   };
 
-
 export const fetchCommentAction = (filmId: string): ThunkActionResult =>
   async(dispatch, _getState, api) => {
     try {
-      const {data} = await api.get(`${APIRoute.comments}/${filmId}`);
+      const {data} = await api.get(`${APIRoute.Comments}/${filmId}`);
       dispatch(loadComments(data));
     } catch {
       toast.warn(ErrorMessage.FetchComments);
     }
   };
 
-
 export const fetchSimilarAction = (filmId: string): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
-      const path = `${APIRoute.films}/${filmId}${APIRoute.similar}`;
+      const path = `${APIRoute.Films}/${filmId}${APIRoute.Similar}`;
       const {data} = await api.get<ServerFilm[]>(path);
       const similar = data.map((film) => adaptFilmToClient(film));
       dispatch(loadSimilar(similar));
@@ -137,11 +128,12 @@ export const fetchSimilarAction = (filmId: string): ThunkActionResult =>
   };
 
 
+// FAVORITE
 export const fetchFavoritesAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
       dispatch(changeFavoriteErrorStatus(false));
-      const {data} = await api.get<ServerFilm[]>(APIRoute.favorite);
+      const {data} = await api.get<ServerFilm[]>(APIRoute.Favorite);
       const favorites = data.map((film) => adaptFilmToClient(film));
       dispatch(loadFavorite(favorites));
     } catch {
@@ -151,12 +143,13 @@ export const fetchFavoritesAction = (): ThunkActionResult =>
   };
 
 
+// ADD REVIEW
 type PostReview = {id: string, rating: number, comment: string, unBlock: () => void, push: () => void}
 
 export const postReviewAction = ({id, rating, comment, unBlock, push}: PostReview): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
-      const {data} = await api.post(`${APIRoute.comments}/${id}`, {rating, comment});
+      const {data} = await api.post(`${APIRoute.Comments}/${id}`, {rating, comment});
       dispatch(loadComments(data));
       push();
     } catch {
@@ -165,12 +158,14 @@ export const postReviewAction = ({id, rating, comment, unBlock, push}: PostRevie
     unBlock();
   };
 
+
+// BTN
 type PostFilmStatusArgs = {id: number, status: number, location: BtnLocation};
 
 export const postFilmStatusAction = ({id, status, location} : PostFilmStatusArgs) : ThunkActionResult =>
   async (dispatch, getState, api) => {
     try {
-      const {data} = await api.post(`${APIRoute.favorite}/${id}/${status}`);
+      const {data} = await api.post(`${APIRoute.Favorite}/${id}/${status}`);
       const newFilm = adaptFilmToClient(data);
       if (location === BtnLocation.Movie) {
         if (newFilm.id === getState().MainData.promo?.id) {

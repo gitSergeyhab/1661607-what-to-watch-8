@@ -1,4 +1,4 @@
-import { ALL_GENRES, MAX_GENRE_NUMBER } from '../const';
+import { ALL_GENRES, MAX_GENRE_NUMBER, ReviewLength } from '../const';
 import { Film } from '../types/types';
 
 
@@ -55,7 +55,7 @@ const getPlayerTime = (time: number): string => {
 const getProgressTime = (time: number, duration: number): string => `${time / duration * 100}`;
 
 const disableReviewBtn = (comment: string, stars: number): boolean => {
-  if (comment.length > 49 && comment.length < 501 && stars > 0) {
+  if (comment.length >= ReviewLength.Min && comment.length <= ReviewLength.Max && stars > 0) {
     return false;
   }
 

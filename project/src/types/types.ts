@@ -27,7 +27,7 @@ export type ServerFilm = {
   id: number,
   name: string,
   'poster_image'?: string,
-  'preview_image'?: string
+  'preview_image'?: string,
   'background_image'?: string,
   'background_color'?: string,
   'video_link'?: string,

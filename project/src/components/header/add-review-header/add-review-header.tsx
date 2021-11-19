@@ -10,7 +10,7 @@ function Breadcrumbs({film}: {film: Film}): JSX.Element{
     <nav className="breadcrumbs">
       <ul className="breadcrumbs__list">
         <li className="breadcrumbs__item">
-          <Link to={`/films/${film.id}`} className="breadcrumbs__link">{film.name}</Link>
+          <Link to={`/films/${film.id}`} className="breadcrumbs__link" data-testid='link-film-name'>{film.name}</Link>
         </li>
         <li className="breadcrumbs__item">
           <span className="breadcrumbs__link" >Add review</span>

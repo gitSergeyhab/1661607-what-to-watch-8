@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 
 import CommentFormStars from '../comment-form-stars/comment-form-stars';
 import CommentFormTextarea from '../comment-form-textarea/comment-form-textarea';
-import { postReviewAction } from '../../store/api-action';
+import { postReviewAction } from '../../store/api-actions';
 import { disableReviewBtn } from '../../util/util';
 
 
@@ -32,6 +32,7 @@ function CommentForm({id}: {id: string}): JSX.Element {
 
   const handleTextareaInput =  (evt: FormEvent<HTMLTextAreaElement>) => setComment(evt.currentTarget.value);
   const handleStarClick = (evt: ChangeEvent<HTMLInputElement>) => setRating(+evt.currentTarget.value);
+
 
   return (
     <form

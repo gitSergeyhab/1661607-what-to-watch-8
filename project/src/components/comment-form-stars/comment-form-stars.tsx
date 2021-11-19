@@ -1,6 +1,6 @@
 import { ChangeEventHandler, memo } from 'react';
+import { STARS_COUNT } from '../../const';
 
-const STARS_COUNT = 10;
 type StarsProps = {starsCount: number, disabled: boolean, onChange: ChangeEventHandler<HTMLInputElement>}
 
 
