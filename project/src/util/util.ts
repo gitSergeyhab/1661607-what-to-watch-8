@@ -35,6 +35,25 @@ const getTimeInHoursAndMinutes = (time: number): string => {
   return `${hours}H ${minutes}M`;
 };
 
+const addZero = (num: number) => {
+  if (Math.floor(num / 10)) {
+    return num.toString();
+  }
+  return `0${num}`;
+};
+
+const getPlayerTime = (time: number): string => {
+  const seconds = time % 60;
+  const minutes = Math.floor(time / 60) % 60;
+  const hours = Math.floor(time / 3600);
+  if (hours) {
+    return `-${addZero(hours)}:${addZero(minutes)}:${addZero(seconds)}`;
+  }
+  return `-${addZero(minutes)}:${addZero(seconds)}`;
+};
+
+const getProgressTime = (time: number, duration: number): string => `${time / duration * 100}`;
+
 const disableReviewBtn = (comment: string, stars: number): boolean => {
   if (comment.length > 49 && comment.length < 501 && stars > 0) {
     return false;
@@ -43,11 +62,6 @@ const disableReviewBtn = (comment: string, stars: number): boolean => {
   return true;
 };
 
-const getPlayerTiming = (runTime: number): string => {
-  const hours = Math.floor(runTime / 60);
-  const minutes = runTime % 60;
-  return `${hours}:${minutes}:00`;
-};
 
 const getUniqueFilmGenres = (films: Film[]) => ([...new Set(films.map((film) => film.genre))].sort());
 
@@ -62,9 +76,10 @@ export {
   getTimeInHoursAndMinutes,
   getReviewDateFormat,
   disableReviewBtn,
-  getPlayerTiming,
   getFilmsByGenre,
   getGenreList,
   checkEmail,
-  checkPassword
+  checkPassword,
+  getPlayerTime,
+  getProgressTime
 };

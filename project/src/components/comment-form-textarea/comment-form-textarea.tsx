@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, memo } from 'react';
 
 
 type TextareaProps = {onChange: (evt: FormEvent<HTMLTextAreaElement>) => void, comment: string, disabled: boolean}
@@ -16,4 +16,4 @@ function CommentFormTextarea({onChange, comment, disabled} : TextareaProps): JSX
   );
 }
 
-export default CommentFormTextarea;
+export default memo(CommentFormTextarea, (prev, next) => prev.comment === next.comment && prev.disabled === next.disabled) ;

@@ -2,34 +2,35 @@
 
 import { useParams} from 'react-router-dom';
 
-import FilmList from '../film-list/film-list';
 import Footer from '../footer/footer';
 import NotFoundPage from '../not-found-page/not-found-page';
 
-import {  useEffect } from 'react';
+import { useEffect } from 'react';
 import MoviePageInfoBlock from '../movie-page-info-block/movie-page-info-block';
 import MainHeader from '../header/main-header/main-header';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCommentAction, fetchMovieAction, fetchSimilarAction } from '../../store/api-action';
-import { getComments, getMovie, getMovieLoadedStatus, getNeedSimilar } from '../../store/movie-data/movie-data-selectors';
+import { getComments, getMovie, getMovieLoadedStatus } from '../../store/movie-data/movie-data-selectors';
 import { getMovieErrorStatus } from '../../store/error-status/error-status-selectors';
 import Spinner from '../spinner/spinner';
 import BtnMyList from '../btns/btn-my-list/btn-my-list';
 import BtnPlayer from '../btns/btn-player/btn-player';
 import BtnAddReview from '../btns/btn-add-review/btn-add-review';
 import { BtnLocation } from '../../const';
+import MoviePageSimilar from '../movie-page-similar/movie-page-similar';
 
 
 type MainPageProps = {authorizationStatus: boolean};
 
 function MoviePage({authorizationStatus}: MainPageProps): JSX.Element {
 
+  console.log('MoviePage');
+
   const {id}: {id: string} = useParams();
 
   const dispatch = useDispatch();
 
   const film = useSelector(getMovie);
-  const similar = useSelector(getNeedSimilar);
   const comments = useSelector(getComments);
   const error = useSelector(getMovieErrorStatus);
   const isMovieLoaded = useSelector(getMovieLoadedStatus);
@@ -52,7 +53,6 @@ function MoviePage({authorizationStatus}: MainPageProps): JSX.Element {
 
   const {name, genre, released, posterImage, backgroundImage, isFavorite} = film;
 
-  const similarTitle = similar.length ? <h2 className="catalog__title">More like this</h2> : <span></span>;
 
   return (
     <>
@@ -103,16 +103,8 @@ function MoviePage({authorizationStatus}: MainPageProps): JSX.Element {
       </section>
 
       <div className="page-content">
-        <section className="catalog catalog--like-this">
 
-          {similarTitle}
-
-          <div className="catalog__films-list">
-
-            <FilmList films={similar}/>
-
-          </div>
-        </section>
+        <MoviePageSimilar/>
 
         <Footer/>
 

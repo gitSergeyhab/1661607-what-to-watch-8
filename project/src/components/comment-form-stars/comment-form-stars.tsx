@@ -1,4 +1,4 @@
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, memo } from 'react';
 
 const STARS_COUNT = 10;
 type StarsProps = {starsCount: number, disabled: boolean, onChange: ChangeEventHandler<HTMLInputElement>}
@@ -43,4 +43,4 @@ function CommentFormStars({starsCount, disabled, onChange} : StarsProps): JSX.El
   );
 }
 
-export default CommentFormStars;
+export default memo(CommentFormStars, (prev, next) => prev.starsCount === next.starsCount && prev.disabled === next.disabled);

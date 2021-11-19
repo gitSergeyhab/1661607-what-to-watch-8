@@ -1,11 +1,13 @@
-import { BtnLocation } from '../const';
+import { toast } from 'react-toastify';
+
 import { adaptFilmToClient } from '../services/adapters';
 import { removeAvatar, removeToken, saveAvatar, saveToken } from '../services/auth-info';
-import { ServerFilm, ThunkActionResult } from '../types/types';
 import { changeFavoriteErrorStatus, changeMainErrorStatus, changeMovieErrorStatus, changeMovieLoadedStatus, loadComments, loadFavorite, loadFilms, loadMovie, loadPromo, loadSimilar, requireLogin, requireLogout } from './action';
+import { ServerFilm, ThunkActionResult } from '../types/types';
+import { BtnLocation } from '../const';
+
 
 import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
 
 
 const AVATAR_URL = 'avatar_url';
@@ -44,9 +46,7 @@ export const checkAuthStatus = (): ThunkActionResult =>
       dispatch(requireLogin());
     } catch {
       dispatch(requireLogout());
-      toast.error(ErrorMessage.CheckAuthStatus);
     }
-
   };
 
 export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
@@ -78,10 +78,10 @@ export const logoutAction = (): ThunkActionResult =>
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
+      dispatch(changeMainErrorStatus(false));
       const {data} = await api.get<ServerFilm[]>(APIRoute.films);
       const films = data.map((film) => adaptFilmToClient(film));
       dispatch(loadFilms(films));
-      dispatch(changeMainErrorStatus(false));
     } catch {
       dispatch(changeMainErrorStatus(true));
       toast.error(ErrorMessage.FetchFilms);
@@ -102,10 +102,10 @@ export const fetchPromoAction = (): ThunkActionResult =>
 export const fetchMovieAction = (filmId: string): ThunkActionResult =>
   async(dispatch, _getState, api) => {
     try{
+      dispatch(changeMovieErrorStatus(false));
       dispatch(changeMovieLoadedStatus(false));
       const {data} = await api.get(`${APIRoute.films}/${filmId}`);
       dispatch(loadMovie(adaptFilmToClient(data)));
-      dispatch(changeMovieErrorStatus(false));
     } catch {
       dispatch(changeMovieErrorStatus(true));
       toast.error(ErrorMessage.FetchMovie);
@@ -134,17 +134,16 @@ export const fetchSimilarAction = (filmId: string): ThunkActionResult =>
     } catch {
       toast.warn(ErrorMessage.FetchSimilar);
     }
-
   };
 
 
 export const fetchFavoritesAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
+      dispatch(changeFavoriteErrorStatus(false));
       const {data} = await api.get<ServerFilm[]>(APIRoute.favorite);
       const favorites = data.map((film) => adaptFilmToClient(film));
       dispatch(loadFavorite(favorites));
-      dispatch(changeFavoriteErrorStatus(false));
     } catch {
       dispatch(changeFavoriteErrorStatus(true));
       toast.error(ErrorMessage.FetchFavorite);
@@ -152,14 +151,14 @@ export const fetchFavoritesAction = (): ThunkActionResult =>
   };
 
 
-type PostReview = {id: string, rating: number, comment: string, unBlock: () => void, clear: () => void}
+type PostReview = {id: string, rating: number, comment: string, unBlock: () => void, push: () => void}
 
-export const postReviewAction = ({id, rating, comment, unBlock, clear}: PostReview): ThunkActionResult =>
+export const postReviewAction = ({id, rating, comment, unBlock, push}: PostReview): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
       const {data} = await api.post(`${APIRoute.comments}/${id}`, {rating, comment});
       dispatch(loadComments(data));
-      clear();
+      push();
     } catch {
       toast.warn(ErrorMessage.PostComment);
     }

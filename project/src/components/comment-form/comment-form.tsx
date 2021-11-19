@@ -1,32 +1,36 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import CommentFormStars from '../comment-form-stars/comment-form-stars';
-import {disableReviewBtn} from '../../util/util';
-import CommentFormTextarea from '../comment-form-textarea/comment-form-textarea';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+
+import CommentFormStars from '../comment-form-stars/comment-form-stars';
+import CommentFormTextarea from '../comment-form-textarea/comment-form-textarea';
 import { postReviewAction } from '../../store/api-action';
+import { disableReviewBtn } from '../../util/util';
+
+
+const FILMS_PATH = '/films/';
 
 
 function CommentForm({id}: {id: string}): JSX.Element {
+
+  const history = useHistory();
 
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
   const [isFormBlocked, setFormBlock] = useState(false);
 
-  const clearReview = () => {
-    setComment('');
-    setRating(0);
-  };
+
+  const pushFilm = () => history.push(`${FILMS_PATH}${id}`);
 
   const dispatch = useDispatch();
 
   const handleFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     setFormBlock(true);
-    dispatch(postReviewAction({id, rating, comment, unBlock: () => setFormBlock(false), clear: clearReview}));
+    dispatch(postReviewAction({id, rating, comment, unBlock: () => setFormBlock(false), push: pushFilm}));
   };
 
-  const handleTextareaInput = (evt: FormEvent<HTMLTextAreaElement>) => setComment(evt.currentTarget.value);
-
+  const handleTextareaInput =  (evt: FormEvent<HTMLTextAreaElement>) => setComment(evt.currentTarget.value);
   const handleStarClick = (evt: ChangeEvent<HTMLInputElement>) => setRating(+evt.currentTarget.value);
 
   return (

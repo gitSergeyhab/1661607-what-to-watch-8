@@ -1,4 +1,4 @@
-import {Film} from '../../types/types';
+import { Film } from '../../types/types';
 import { getTimeInHoursAndMinutes } from '../../util/util';
 
 /* eslint-disable no-console */
@@ -10,7 +10,12 @@ function StarInLine({star}: {star: string}) {
 
 function MoviePageDetails({film}: {film: Film}): JSX.Element {
 
+  console.log('Details');
+
   const {released, runTime, genre, director, starring} = film;
+
+  const actors = starring.map((star) => <StarInLine star={star} key={star}/>);
+  const displayTime = getTimeInHoursAndMinutes(runTime);
 
   return (
 
@@ -23,8 +28,7 @@ function MoviePageDetails({film}: {film: Film}): JSX.Element {
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
-
-            {starring.map((star) => <StarInLine star={star} key={star}/>)}
+            {actors}
           </span>
         </p>
       </div>
@@ -32,15 +36,21 @@ function MoviePageDetails({film}: {film: Film}): JSX.Element {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{getTimeInHoursAndMinutes(runTime)}</span>
+          <span className="film-card__details-value">
+            {displayTime}
+          </span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>
-          <span className="film-card__details-value">{genre}</span>
+          <span className="film-card__details-value">
+            {genre}
+          </span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Released</strong>
-          <span className="film-card__details-value">{released}</span>
+          <span className="film-card__details-value">
+            {released}
+          </span>
         </p>
       </div>
     </div>

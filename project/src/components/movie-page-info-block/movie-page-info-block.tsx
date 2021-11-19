@@ -12,7 +12,6 @@ const TabClass = {
   activeTab: 'film-nav__item--active',
 };
 
-
 const TabName = {
   Overview: 'Overview',
   Details: 'Details',
@@ -23,7 +22,6 @@ const TabName = {
 type TabProps = {tab: string, activeTab: string, handleTabClick: (evt: MouseEvent<HTMLLIElement>) => void}
 
 function Tab({tab, activeTab, handleTabClick} : TabProps): JSX.Element {
-
 
   const classes = tab === activeTab ? `${TabClass.activeTab} ${TabClass.tab}` : TabClass.tab;
 

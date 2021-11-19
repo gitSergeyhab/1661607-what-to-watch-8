@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Film } from '../../../types/types';
+
 import Logo from '../header-components/logo/logo';
 import UserBlock from '../header-components/user-block/user-block';
+import { Film } from '../../../types/types';
+
 
 function Breadcrumbs({film}: {film: Film}): JSX.Element{
   return (

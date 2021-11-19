@@ -1,12 +1,13 @@
-import { Film } from '../../types/types';
-import MainHeader from '../header/main-header/main-header';
 import BtnMyList from '../btns/btn-my-list/btn-my-list';
 import BtnPlayer from '../btns/btn-player/btn-player';
+import MainHeader from '../header/main-header/main-header';
+import { Film } from '../../types/types';
 import { BtnLocation } from '../../const';
 
 type MAinPromoProps = {promo: Film, authorizationStatus: boolean}
 
 function MainPromo({promo, authorizationStatus}: MAinPromoProps): JSX.Element {
+  console.log('MainPromo');
 
   const {name, posterImage, backgroundImage, genre, released, id, isFavorite} = promo;
 
