@@ -1,13 +1,13 @@
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
+import { createMemoryHistory } from 'history';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { screen } from '@testing-library/react';
 
-import { MockState, ScreenText, TEST_ID } from '../../../util/test-const';
-import { createMemoryHistory } from 'history';
-import { renderComponent } from '../../../util/test-utils';
-import { AppRoute } from '../../../const';
 import BtnPlayer from './btn-player';
+import { renderComponent } from '../../../util/test-utils';
+import { MockState, ScreenText, TEST_ID } from '../../../util/test-const';
+import { AppRoute } from '../../../const';
 
 
 const state = {...MockState.FilledOk};

@@ -5,8 +5,8 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 
 import MainPromo from './main-promo';
 import { renderComponent } from '../../util/test-utils';
-import { MockState, ScreenText } from '../../util/test-const';
 import { makeFakeFilm } from '../../util/test-mocks';
+import { MockState, ScreenText } from '../../util/test-const';
 
 
 const history = createMemoryHistory();

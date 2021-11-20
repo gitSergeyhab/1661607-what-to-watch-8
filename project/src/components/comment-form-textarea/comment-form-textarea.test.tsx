@@ -1,6 +1,4 @@
-
 import { render, screen } from '@testing-library/react';
-
 import CommentFormTextarea from './comment-form-textarea';
 import { ScreenText } from '../../util/test-const';
 

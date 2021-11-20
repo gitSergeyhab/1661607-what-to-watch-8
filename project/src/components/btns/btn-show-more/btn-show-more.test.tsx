@@ -1,11 +1,11 @@
 import thunk from 'redux-thunk';
+import { createMemoryHistory } from 'history';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { screen } from '@testing-library/react';
 
 import BtnShowMore from './btn-show-more';
-import { MockState, ScreenText } from '../../../util/test-const';
-import { createMemoryHistory } from 'history';
 import { renderComponent } from '../../../util/test-utils';
+import { MockState, ScreenText } from '../../../util/test-const';
 
 
 const state = {...MockState.FilledOk};

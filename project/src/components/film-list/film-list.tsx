@@ -1,5 +1,5 @@
 import MediaElement from '../media-element/media-element';
-import {Film} from '../../types/types';
+import { Film } from '../../types/types';
 
 
 function FilmList({films}: {films: Film[]}): JSX.Element {

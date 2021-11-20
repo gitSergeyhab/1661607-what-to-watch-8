@@ -1,11 +1,11 @@
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
+import { createMemoryHistory } from 'history';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { screen } from '@testing-library/react';
 
 import BtnMyList from './btn-my-list';
 import { MockState, ScreenText, TEST_ID } from '../../../util/test-const';
-import { createMemoryHistory } from 'history';
 import { renderComponent } from '../../../util/test-utils';
 import { AppRoute, BtnLocation } from '../../../const';
 

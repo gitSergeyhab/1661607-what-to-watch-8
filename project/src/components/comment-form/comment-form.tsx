@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
@@ -18,6 +18,12 @@ function CommentForm({id}: {id: string}): JSX.Element {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
   const [isFormBlocked, setFormBlock] = useState(false);
+
+  useEffect(() => function cleanup() {
+    setComment('');
+    setRating(0);
+    setFormBlock(false);
+  }, []);
 
 
   const pushFilm = () => history.push(`${FILMS_PATH}${id}`);

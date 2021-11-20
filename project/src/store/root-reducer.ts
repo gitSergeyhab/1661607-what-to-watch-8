@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+
 import { errorStatus } from './error-status/error-status';
 import { favoriteData } from './favorite-data/favorite-data';
 import { mainData } from './main-data/main-data';

@@ -6,10 +6,9 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 
 import FilmCard from './film-card';
 import { renderComponent } from '../../util/test-utils';
+import { makeFakeFilm } from '../../util/test-mocks';
 import { MockState, TEST_ID } from '../../util/test-const';
 import { AppRoute} from '../../const';
-import { makeFakeFilm } from '../../util/test-mocks';
-
 
 const state = {...MockState.FilledOk};
 const history = createMemoryHistory();

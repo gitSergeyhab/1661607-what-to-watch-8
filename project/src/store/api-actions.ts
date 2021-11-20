@@ -6,12 +6,10 @@ import { changeFavoriteErrorStatus, changeMainErrorStatus, changeMovieErrorStatu
 import { ServerFilm, ThunkActionResult } from '../types/types';
 import { APIRoute, BtnLocation } from '../const';
 
-
 import 'react-toastify/dist/ReactToastify.css';
 
 
 const AVATAR_URL = 'avatar_url';
-
 
 const ErrorMessage = {
   Login: 'unable to log in',

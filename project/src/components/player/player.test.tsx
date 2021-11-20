@@ -5,8 +5,8 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 
 import Player from './player';
 import { renderComponent } from '../../util/test-utils';
-import { MockState, ScreenText } from '../../util/test-const';
 import userEvent from '@testing-library/user-event';
+import { MockState, ScreenText } from '../../util/test-const';
 
 
 const Path = {

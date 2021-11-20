@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import { makeFakeComment } from '../../util/test-mocks';
 import ReviewCard from './review-card';
+import { makeFakeComment } from '../../util/test-mocks';
+
 
 const comment = makeFakeComment();
 describe('ReviewCard Component', () => {

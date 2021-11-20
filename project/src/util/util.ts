@@ -1,5 +1,5 @@
-import { ALL_GENRES, MAX_GENRE_NUMBER, ReviewLength } from '../const';
 import { Film } from '../types/types';
+import { ALL_GENRES, MAX_GENRE_NUMBER, ReviewLength } from '../const';
 
 
 const Re = {

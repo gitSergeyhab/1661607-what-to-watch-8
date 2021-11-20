@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+
 import MoviePageReviews from './movie-page-reviews';
 import { makeFakeCommentList } from '../../util/test-mocks';
 import { ScreenText } from '../../util/test-const';

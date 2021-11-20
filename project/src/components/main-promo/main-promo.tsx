@@ -4,6 +4,7 @@ import MainHeader from '../header/main-header/main-header';
 import { Film } from '../../types/types';
 import { BtnLocation } from '../../const';
 
+
 type MAinPromoProps = {promo: Film, authorizationStatus: boolean}
 
 function MainPromo({promo, authorizationStatus}: MAinPromoProps): JSX.Element {

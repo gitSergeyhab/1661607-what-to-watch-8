@@ -5,8 +5,8 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 
 import MediaElement from './media-element';
 import { renderComponent } from '../../util/test-utils';
-import { MockState } from '../../util/test-const';
 import { makeFakeFilm } from '../../util/test-mocks';
+import { MockState } from '../../util/test-const';
 
 
 const TEST_ID_VIDEO = 'card-video';

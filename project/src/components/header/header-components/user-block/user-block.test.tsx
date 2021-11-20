@@ -6,8 +6,8 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 
 import UserBlock from './user-block';
 import { renderComponent } from '../../../../util/test-utils';
-import { MockState, ScreenText } from '../../../../util/test-const';
 import { logoutAction } from '../../../../store/api-actions';
+import { MockState, ScreenText } from '../../../../util/test-const';
 
 
 const state = {...MockState.FilledOk};

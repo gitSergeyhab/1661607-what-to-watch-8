@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../../../const';
+import { MouseEvent } from 'react';
+import { useDispatch } from 'react-redux';
+
 import { useHistory } from 'react-router';
 import { getAvatar } from '../../../../services/auth-info';
-import { useDispatch } from 'react-redux';
 import { logoutAction } from '../../../../store/api-actions';
-import { MouseEvent } from 'react';
+import { AppRoute } from '../../../../const';
 
 
 function UserAuth(): JSX.Element {

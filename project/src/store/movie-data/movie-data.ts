@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import {Comment, Film} from '../../types/types';
+import { Comment, Film } from '../../types/types';
 import { changeMovieLoadedStatus, loadComments, loadMovie, loadSimilar } from '../action';
 
 type MovieData = {

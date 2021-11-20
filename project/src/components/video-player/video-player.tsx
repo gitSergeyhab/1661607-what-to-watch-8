@@ -1,7 +1,7 @@
 import { Film } from '../../types/types';
 
-export default function VideoPlayer({film}: {film: Film}): JSX.Element {
 
+export default function VideoPlayer({film}: {film: Film}): JSX.Element {
 
   return (
     <video

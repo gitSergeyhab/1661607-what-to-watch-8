@@ -1,4 +1,3 @@
-
 import { render, screen } from '@testing-library/react';
 import CommentFormStars from './comment-form-stars';
 import { STARS_COUNT } from '../../const';

@@ -135,13 +135,3 @@ export const ScreenText = {
     Reviews: /No Reviews/i,
   },
 };
-
-export const TestPageText = {
-  Login: 'Login Page Test Text',
-  Favorites: 'Favorites Page Test Text',
-  Main: 'Main Page Test Text',
-  Movie: 'Room Page Test Text',
-  AddReview: 'AddReview Page Test Text',
-  Player: 'Player Page Test Text',
-};
-

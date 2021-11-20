@@ -1,3 +1,8 @@
+const ALL_GENRES = 'All genres';
+
+const MAX_GENRE_NUMBER = 10;
+
+const STARS_COUNT = 10;
 
 const enum AppRoute {
   Main = '/',
@@ -7,12 +12,6 @@ const enum AppRoute {
   AddReview = '/films/:id/review',
   Player = '/player/:id',
 }
-
-
-const ALL_GENRES = 'All genres';
-const MAX_GENRE_NUMBER = 10;
-const STARS_COUNT = 10;
-
 
 const enum BtnLocation {
   Promo = 'promo',

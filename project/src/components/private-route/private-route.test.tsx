@@ -2,10 +2,12 @@ import thunk from 'redux-thunk';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { MockState, ScreenText } from '../../util/test-const';
-import { renderComponent } from '../../util/test-utils';
+
 import MyList from '../my-list/my-list';
 import PrivateRoute from './private-route';
+import { renderComponent } from '../../util/test-utils';
+import { MockState, ScreenText } from '../../util/test-const';
+
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);

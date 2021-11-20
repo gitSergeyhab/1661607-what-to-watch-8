@@ -3,8 +3,8 @@ import { createMemoryHistory } from 'history';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 
 import MainHeader from './main-header';
-import { MockState, ScreenText } from '../../../util/test-const';
 import { renderComponent } from '../../../util/test-utils';
+import { MockState, ScreenText } from '../../../util/test-const';
 
 
 const state = {...MockState.FilledOk};

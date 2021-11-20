@@ -5,8 +5,8 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 
 import AddReviewHeader from './add-review-header';
 import { renderComponent } from '../../../util/test-utils';
-import { MockState, ScreenText, TEST_ID } from '../../../util/test-const';
 import { makeFakeFilm } from '../../../util/test-mocks';
+import { MockState, ScreenText, TEST_ID } from '../../../util/test-const';
 
 
 const LINK_TEST_ID = 'link-film-name';

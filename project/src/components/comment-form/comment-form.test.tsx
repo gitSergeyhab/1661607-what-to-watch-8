@@ -6,10 +6,9 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 
 import CommentForm from './comment-form';
 import { renderComponent } from '../../util/test-utils';
+import { postReviewAction } from '../../store/api-actions';
 import { MockState, ScreenText, TEST_ID } from '../../util/test-const';
 import { ReviewLength, STARS_COUNT } from '../../const';
-import { postReviewAction } from '../../store/api-actions';
-
 
 const testText = {
   ok: new Array(ReviewLength.Min + 1).fill('x').join(''),

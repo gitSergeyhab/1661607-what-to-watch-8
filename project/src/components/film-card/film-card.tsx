@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
-import {Film} from '../../types/types';
+import { Film } from '../../types/types';
 
 
 const FILM_PATH = '/films/';
-
 
 export default function FilmCard({film}: {film: Film}): JSX.Element {
 

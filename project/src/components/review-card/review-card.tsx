@@ -1,5 +1,5 @@
-import {Comment} from '../../types/types';
-import {getReviewDateFormat} from '../../util/util';
+import { Comment } from '../../types/types';
+import { getReviewDateFormat } from '../../util/util';
 
 
 function ReviewCard({review}: {review: Comment}): JSX.Element {

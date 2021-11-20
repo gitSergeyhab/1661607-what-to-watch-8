@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 import NotFoundPage from '../not-found-page/not-found-page';
 import { fetchMovieAction } from '../../store/api-actions';
-import { getMovie } from '../../store/movie-data/movie-data-selectors';
+import { getMovie, getMovieLoadedStatus } from '../../store/movie-data/movie-data-selectors';
 import { getMovieErrorStatus } from '../../store/error-status/error-status-selectors';
 import { getAuthVerifiedStatus } from '../../store/user-data/user-data-selectors';
 import { getProgressTime, getPlayerTime } from '../../util/util';
@@ -82,6 +82,7 @@ function Player(): JSX.Element {
   const film = useSelector(getMovie);
   const error = useSelector(getMovieErrorStatus);
   const auth = useSelector(getAuthVerifiedStatus);
+  const isMovieLoaded = useSelector(getMovieLoadedStatus);
 
   const controlStyle = isLoaded ? {} : {display: 'none'};
 
@@ -97,7 +98,7 @@ function Player(): JSX.Element {
     return <NotFoundPage authorizationStatus={auth}/>;
   }
 
-  if (!film) {
+  if (!isMovieLoaded || !film) {
     return <DummyPlayer/>;
   }
 

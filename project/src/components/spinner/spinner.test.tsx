@@ -3,8 +3,9 @@ import { screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 
 import Spinner from './spinner';
-import { MockState, ScreenText } from '../../util/test-const';
 import { renderComponent } from '../../util/test-utils';
+import { MockState, ScreenText } from '../../util/test-const';
+
 
 const state = {...MockState.EmptyNoAuth};
 const history = createMemoryHistory();

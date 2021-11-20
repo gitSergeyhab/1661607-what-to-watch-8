@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import {Film} from '../../types/types';
+
 import FilmCard from '../film-card/film-card';
 import VideoPlayer from '../video-player/video-player';
+import { Film } from '../../types/types';
+
 
 const CardFormat = {
   Picture: 'picture',
