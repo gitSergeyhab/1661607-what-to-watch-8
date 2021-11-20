@@ -1,17 +1,18 @@
 import { useState, MouseEvent, memo } from 'react';
-import { ALL_GENRES } from '../../const';
-import { Film } from '../../types/types';
-import { getFilmsByGenre } from '../../util/util';
+
 import BtnShowMore from '../btns/btn-show-more/btn-show-more';
 import FilmList from '../film-list/film-list';
+import Footer from '../footer/footer';
 import MainGenres from '../main-genres/main-genres';
-/* eslint-disable no-console */
+import { Film } from '../../types/types';
+import { getFilmsByGenre } from '../../util/util';
+import { ALL_GENRES } from '../../const';
+
 
 const SHOWN_FILMS = 8;
 
 
 function MainBottom({films} : {films: Film[]}): JSX.Element {
-  console.log('MainBottom');
 
   const [filmCount, setFilmsCount] = useState(SHOWN_FILMS);
 
@@ -57,6 +58,9 @@ function MainBottom({films} : {films: Film[]}): JSX.Element {
         </div>
 
       </section>
+
+      <Footer/>
+
     </div>
   );
 }

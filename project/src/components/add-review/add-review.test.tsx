@@ -13,6 +13,7 @@ const mockStore = configureMockStore([thunk]);
 
 describe ('AddReview Component', () => {
   it('should render correctly', () => {
+
     const state = {...MockState.FilledOk};
     const store = mockStore(state);
     renderComponent(<AddReview authorizationStatus/>, store, history);
@@ -22,6 +23,7 @@ describe ('AddReview Component', () => {
   });
 
   it('should render Spinner when loading', () => {
+
     const state = {...MockState.FilledOk, MovieData: {...MockState.FilledOk.MovieData, movie: null}};
     const store = mockStore(state);
     renderComponent(<AddReview authorizationStatus/>, store, history);
@@ -33,6 +35,7 @@ describe ('AddReview Component', () => {
   });
 
   it('should render NotFoundPage when movie error', () => {
+
     const state = {...MockState.FilledOk, ErrorStatus: {movie: true}};
     const store = mockStore(state);
     renderComponent(<AddReview authorizationStatus/>, store, history);

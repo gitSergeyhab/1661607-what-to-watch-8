@@ -1,8 +1,9 @@
-import GridLoader from 'react-spinners/GridLoader';
-import { css } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
+import { PropagateLoader, GridLoader } from 'react-spinners';
+import { css } from '@emotion/react';
+import { toast } from 'react-toastify';
 
 import NotFoundPage from '../not-found-page/not-found-page';
 import { fetchMovieAction } from '../../store/api-actions';
@@ -12,11 +13,18 @@ import { getAuthVerifiedStatus } from '../../store/user-data/user-data-selectors
 import { getProgressTime, getPlayerTime } from '../../util/util';
 
 
+const ERROR_MESSAGE = 'sorry... something is wrong...';
+
+const override1= css`
+  display: block;
+  margin: 0 auto;
+`;
+
 const override = css`
   display: block;
   margin: 0 auto;
-  padding-top: 250px;
-  background-color: #e1b0b2;
+  padding-top: 50px;
+  background-color: #000000;
 `;
 
 const PlayerBtn = {
@@ -24,15 +32,25 @@ const PlayerBtn = {
   Pause: '#pause',
 };
 
+const loadingMessage = (
+  <>
+    <p style={{fontSize: '27px'}}>Loading</p>
+    <PropagateLoader color='black' css={override1} size={15} />
+  </>);
+
+
 function DummyPlayer(): JSX.Element {
 
   const history = useHistory();
 
-
   return (
     <div className="player">
-      <div className="player__video" style={{backgroundColor: '#e1b0b2'}}>
-        <GridLoader size={155} margin={5} color='black' css={override}/>
+      <div className="player__video" style={{backgroundColor: '#000000'}}>
+        <div style={{textAlign: 'center', paddingTop: '50px', color: 'white', fontSize: '27px', fontWeight: 'bold'}}>
+          Player is Loading
+        </div>
+
+        <GridLoader size={155} margin={5} color='white' css={override}/>
       </div>
 
       <button
@@ -55,6 +73,7 @@ function Player(): JSX.Element {
   const [statusPlay, setStatusPlay] = useState(false);
   const [timeToEnd, setTimeToEnd] = useState(0);
   const [progress, setProgress] = useState('0');
+  const [uploadError, setError] = useState(false);
 
 
   const params: {id: string} = useParams();
@@ -72,6 +91,7 @@ function Player(): JSX.Element {
   useEffect(() => {
     dispatch(fetchMovieAction(id));
   }, [dispatch, id]);
+
 
   if (error) {
     return <NotFoundPage authorizationStatus={auth}/>;
@@ -109,13 +129,24 @@ function Player(): JSX.Element {
     }
   };
 
+  const handleUploadError = () => {
+    toast.error(ERROR_MESSAGE);
+    setError(true);
+  };
+
+
+  const handleMetaDataLoaded = () => {
+    setLoaded(true);
+    setError(false);
+  };
+
 
   return (
-
     <div className="player" style={{backgroundColor: 'black', textAlign: 'center'}}>
       <div className="film-card__bg">
         <img src={film.backgroundImage} alt={film.name} />
       </div>
+      {isLoaded || uploadError ? null : loadingMessage }
 
       <video
         height='50%'
@@ -126,7 +157,8 @@ function Player(): JSX.Element {
         poster={film.posterImage}
         preload='auto'
         onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={() => {setLoaded(true);}}
+        onLoadedMetadata={handleMetaDataLoaded}
+        onError={handleUploadError}
       >
         <source src={film.videoLink}/>
       </video>
@@ -176,7 +208,6 @@ function Player(): JSX.Element {
         </div>
       </div>
     </div>
-
   );
 }
 

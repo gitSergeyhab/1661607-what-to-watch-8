@@ -1,13 +1,12 @@
 import { memo } from 'react';
-import {Comment} from '../../types/types';
 import ReviewCard from '../review-card/review-card';
-/* eslint-disable no-console */
+import {Comment} from '../../types/types';
 
 
 function OneColumnReview({review}: {review: Comment}): JSX.Element {
 
   return (
-    <div className="film-card__reviews film-card__row">
+    <div className="film-card__reviews film-card__row" data-testid='reviews'>
       <ReviewCard review={review}/>
     </div>
   );
@@ -22,7 +21,7 @@ function TwoColumnsReviews({reviews}: {reviews: Comment[]}): JSX.Element {
 
 
   return (
-    <div className="film-card__reviews film-card__row">
+    <div className="film-card__reviews film-card__row" data-testid='reviews'>
       <div className="film-card__reviews-col">
 
         {firstReviewsColumn}
@@ -40,24 +39,21 @@ function TwoColumnsReviews({reviews}: {reviews: Comment[]}): JSX.Element {
 
 function MoviePageReviews({reviews}: {reviews: Comment[]}): JSX.Element {
 
-  console.log('Reviews');
-
   if (reviews.length === 1) {
     return <OneColumnReview review={reviews[0]} />;
   }
 
   if (reviews.length > 1) {
-    return <TwoColumnsReviews reviews={reviews} />;
+    return <TwoColumnsReviews reviews={reviews}/>;
   }
 
   const style = { margin: 'auto', color: 'black'};
 
   return  (
-    <div className="film-card__reviews film-card__row">
+    <div className="film-card__reviews film-card__row" data-testid='reviews'>
       <span style={style}>No Reviews ... </span>
     </div>
   );
 }
 
 export default memo(MoviePageReviews, (prev, next) => prev.reviews === next.reviews);
-

@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { MouseEvent } from 'react';
 import { useHistory } from 'react-router';
 

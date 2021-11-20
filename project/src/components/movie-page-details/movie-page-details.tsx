@@ -1,16 +1,12 @@
 import { Film } from '../../types/types';
 import { getTimeInHoursAndMinutes } from '../../util/util';
 
-/* eslint-disable no-console */
-
 
 function StarInLine({star}: {star: string}) {
   return <>{star},<br /></>;
 }
 
 function MoviePageDetails({film}: {film: Film}): JSX.Element {
-
-  console.log('Details');
 
   const {released, runTime, genre, director, starring} = film;
 

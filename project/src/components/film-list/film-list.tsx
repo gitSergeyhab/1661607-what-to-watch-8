@@ -1,11 +1,8 @@
-import {Film} from '../../types/types';
 import MediaElement from '../media-element/media-element';
+import {Film} from '../../types/types';
 
 
-/* eslint-disable no-console */
 function FilmList({films}: {films: Film[]}): JSX.Element {
-
-  console.log('FilmList');
 
   return (
     <>

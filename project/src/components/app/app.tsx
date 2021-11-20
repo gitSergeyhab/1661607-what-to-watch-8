@@ -13,14 +13,9 @@ import { getAuthStatus } from '../../store/user-data/user-data-selectors';
 import { AppRoute } from '../../const';
 
 
-/* eslint-disable no-console */
-
-
 function App(): JSX.Element {
 
   const authorizationStatus = useSelector(getAuthStatus);
-
-  console.log('App');
 
   return (
     <Switch>

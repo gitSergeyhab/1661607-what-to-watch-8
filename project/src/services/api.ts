@@ -7,7 +7,6 @@ const TOKEN_HEADER = 'X-Token';
 
 const enum HttpCode {
   Unauthorized = 401,
-  // NotFound = 404,
 }
 
 

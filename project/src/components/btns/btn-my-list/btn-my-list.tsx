@@ -1,9 +1,9 @@
-/* eslint-disable no-console */
-
 import { useHistory } from 'react-router-dom';
-import { AppRoute, BtnLocation } from '../../../const';
 import { useDispatch } from 'react-redux';
+
 import { postFilmStatusAction } from '../../../store/api-actions';
+import { AppRoute, BtnLocation } from '../../../const';
+
 
 const LinkHref = {
   InList: '#in-list',

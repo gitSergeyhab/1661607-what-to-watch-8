@@ -119,9 +119,21 @@ export const ScreenText = {
   Player: {
     Name: /Transpotting/i,
     Exit: /Exit/i,
+    Dummy: /Player is Loading/i,
   },
   Spinner: /Loading/i,
   Footer: /2019 What to watch Ltd/i,
+  Tab: {
+    Overview: {
+      Director: /Director/i,
+      Starring: /Starring/i,
+    },
+    Details: {
+      Genre: /Genre/i,
+      RunTime: /Run Time/i,
+    },
+    Reviews: /No Reviews/i,
+  },
 };
 
 export const TestPageText = {

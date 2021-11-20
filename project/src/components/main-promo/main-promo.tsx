@@ -7,7 +7,6 @@ import { BtnLocation } from '../../const';
 type MAinPromoProps = {promo: Film, authorizationStatus: boolean}
 
 function MainPromo({promo, authorizationStatus}: MAinPromoProps): JSX.Element {
-  console.log('MainPromo');
 
   const {name, posterImage, backgroundImage, genre, released, id, isFavorite} = promo;
 
@@ -49,4 +48,3 @@ function MainPromo({promo, authorizationStatus}: MAinPromoProps): JSX.Element {
 }
 
 export default MainPromo;
-

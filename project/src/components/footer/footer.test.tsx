@@ -9,7 +9,7 @@ import { MockState, ScreenText } from '../../util/test-const';
 import { AppRoute } from '../../const';
 
 
-const firstPath = '/films/1';
+const FIRST_PATH = '/films/1';
 const state = {...MockState.FilledOk};
 const history = createMemoryHistory();
 const mockStore = configureMockStore();
@@ -25,11 +25,11 @@ describe('Footer Component', () => {
   });
 
   it('should link correctly', () => {
-    history.push(firstPath);
+    history.push(FIRST_PATH);
 
     renderComponent(<Footer/>, store, history);
 
-    expect(history.location.pathname).toBe(firstPath);
+    expect(history.location.pathname).toBe(FIRST_PATH);
     const link = screen.getByRole('link');
 
     userEvent.click(link);
