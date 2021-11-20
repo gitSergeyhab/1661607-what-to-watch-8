@@ -111,15 +111,15 @@ function Player(): JSX.Element {
   const handlePlayPauseClick = () => {
     if (video) {
       if (video.paused) {
-        setStatusPlay(true);
         video.play();
       } else {
-        setStatusPlay(false);
         video?.pause();
       }
     }
   };
 
+  const handlePlayClick = () => setStatusPlay(true);
+  const handlePauseClick = () => setStatusPlay(false);
 
   const handleTimeUpdate = () => {
     if (video) {
@@ -160,6 +160,8 @@ function Player(): JSX.Element {
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleMetaDataLoaded}
         onError={handleUploadError}
+        onPlay={handlePlayClick}
+        onPause={handlePauseClick}
       >
         <source src={film.videoLink}/>
       </video>
