@@ -117,7 +117,6 @@ export const ScreenText = {
     Alt: /User avatar/i,
   },
   Player: {
-    Name: /Transpotting/i,
     Exit: /Exit/i,
     Dummy: /Player is Loading/i,
   },

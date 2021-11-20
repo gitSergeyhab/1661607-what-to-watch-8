@@ -150,11 +150,8 @@ function Player(): JSX.Element {
       {isLoaded || uploadError ? null : loadingMessage }
 
       <video
-        height='50%'
-        width='50%'
-        style={{paddingTop: '10%'}}
         ref={videoRef}
-        autoPlay={false}
+        autoPlay
         poster={film.posterImage}
         preload='auto'
         onTimeUpdate={handleTimeUpdate}
@@ -197,7 +194,7 @@ function Player(): JSX.Element {
             <span>Play</span>
           </button>
 
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen"
             onClick={handleFullScreenClick}

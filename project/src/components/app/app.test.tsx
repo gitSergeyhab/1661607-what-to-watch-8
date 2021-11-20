@@ -75,7 +75,7 @@ describe('App Component', () => {
       renderFakeApp(store);
 
       expect(screen.getByText(ScreenText.Player.Exit)).toBeInTheDocument();
-      expect(screen.getByText(ScreenText.Player.Name)).toBeInTheDocument();
+      expect(screen.getByText(state.MovieData.movie.name)).toBeInTheDocument();
     });
 
     it('test rout /fake -> redirect to notFoundPage', () => {

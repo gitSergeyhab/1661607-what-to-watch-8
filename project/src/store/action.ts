@@ -5,7 +5,6 @@ import { Comment, Film } from '../types/types';
 export const enum ActionType {
   LoadFilms = 'data/main/films/LoadFilms',
   LoadPromo = 'data/main/promo/LoadPromo',
-  GetGenres = 'main/genres/GetGenres',
   LoadMovie = 'data/movie/film/LoadMovie',
   LoadSimilar = 'data/movie/similar/LoadSimilar',
   LoadComments = 'data/movie/comments/LoadComments',

@@ -25,7 +25,7 @@ describe ('Player Component', () => {
     renderComponent(<Player/>, store, history);
 
     expect(screen.queryByText(ScreenText.Player.Exit)).toBeInTheDocument();
-    expect(screen.queryByText(ScreenText.Player.Name)).toBeInTheDocument();
+    expect(screen.queryByText(state.MovieData.movie.name)).toBeInTheDocument();
   });
 
   it('should rout back when click EXIT', () => {
@@ -58,8 +58,6 @@ describe ('Player Component', () => {
     expect(screen.queryByText(ScreenText.Player.Dummy)).toBeInTheDocument();
 
     expect(screen.queryByText(ScreenText.Player.Exit)).toBeInTheDocument();
-
-    expect(screen.queryByText(ScreenText.Player.Name)).not.toBeInTheDocument();
   });
 
   it('should render NotFoundPage when movie error', () => {
@@ -72,6 +70,6 @@ describe ('Player Component', () => {
 
     expect(screen.queryByText(ScreenText.Player.Dummy)).not.toBeInTheDocument();
     expect(screen.queryByText(ScreenText.Player.Exit)).not.toBeInTheDocument();
-    expect(screen.queryByText(ScreenText.Player.Name)).not.toBeInTheDocument();
+    expect(screen.queryByText(state.MovieData.movie.name)).not.toBeInTheDocument();
   });
 });
