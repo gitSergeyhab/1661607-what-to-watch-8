@@ -1,16 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { PropagateLoader, GridLoader } from 'react-spinners';
 import { css } from '@emotion/react';
 import { toast } from 'react-toastify';
 
 import NotFoundPage from '../not-found-page/not-found-page';
-import { fetchMovieAction } from '../../store/api-actions';
-import { getMovie, getMovieLoadedStatus } from '../../store/movie-data/movie-data-selectors';
-import { getMovieErrorStatus } from '../../store/error-status/error-status-selectors';
-import { getAuthVerifiedStatus } from '../../store/user-data/user-data-selectors';
+import { getAuthVerifiedStatus } from '../../store/user-slice/user-slice-selectors';
 import { getProgressTime, getPlayerTime } from '../../util/util';
+import { useGetOneFilmQuery } from '../../services/query-api';
+import { adaptFilmToClient } from '../../services/adapters';
 
 
 const ERROR_MESSAGE = 'sorry... something is wrong...';
@@ -79,28 +78,22 @@ function Player(): JSX.Element {
   const params: {id: string} = useParams();
   const {id} = params;
 
-  const film = useSelector(getMovie);
-  const error = useSelector(getMovieErrorStatus);
+  const {data, isFetching, isError} = useGetOneFilmQuery(id);
+
   const auth = useSelector(getAuthVerifiedStatus);
-  const isMovieLoaded = useSelector(getMovieLoadedStatus);
 
-  const controlStyle = isLoaded ? {} : {display: 'none'};
-
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchMovieAction(id));
-  }, [dispatch, id]);
+  const controlStyle = isFetching ? {display: 'none'} : {};
 
 
-  if (error) {
+  if (isError) {
     return <NotFoundPage authorizationStatus={auth}/>;
   }
 
-  if (!isMovieLoaded || !film) {
+  if (isFetching || !data) {
     return <DummyPlayer/>;
   }
+
+  const film  = adaptFilmToClient(data);
 
   const handleExitClick = () => history.goBack();
 
@@ -134,7 +127,6 @@ function Player(): JSX.Element {
     toast.error(ERROR_MESSAGE);
     setError(true);
   };
-
 
   const handleMetaDataLoaded = () => {
     setLoaded(true);

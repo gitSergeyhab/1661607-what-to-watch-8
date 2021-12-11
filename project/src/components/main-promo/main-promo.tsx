@@ -1,15 +1,21 @@
 import BtnMyList from '../btns/btn-my-list/btn-my-list';
 import BtnPlayer from '../btns/btn-player/btn-player';
 import MainHeader from '../header/main-header/main-header';
-import { Film } from '../../types/types';
+import { useGetPromoQuery } from '../../services/query-api';
+import { adaptFilmToClient } from '../../services/adapters';
 import { BtnLocation } from '../../const';
 
 
-type MAinPromoProps = {promo: Film, authorizationStatus: boolean}
+type MAinPromoProps = {authorizationStatus: boolean}
 
-function MainPromo({promo, authorizationStatus}: MAinPromoProps): JSX.Element {
+function MainPromo({authorizationStatus}: MAinPromoProps): JSX.Element {
 
-  const {name, posterImage, backgroundImage, genre, released, id, isFavorite} = promo;
+  const {data} = useGetPromoQuery('');
+  if (!data) {
+    return <span></span>;
+  }
+
+  const {name, posterImage, backgroundImage, genre, released, id, isFavorite} = adaptFilmToClient(data);
 
   return (
     <section className="film-card">

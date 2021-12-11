@@ -9,11 +9,14 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
 import SignIn from '../../components/sign-in/sign-in';
-import { getAuthStatus } from '../../store/user-data/user-data-selectors';
+import { getAuthStatus } from '../../store/user-slice/user-slice-selectors';
 import { AppRoute } from '../../const';
+import { useCheckLoginQuery } from '../../services/query-api';
 
 
 function App(): JSX.Element {
+
+  useCheckLoginQuery(''); // запрос, чтобы проверить авторизацию
 
   const authorizationStatus = useSelector(getAuthStatus);
 

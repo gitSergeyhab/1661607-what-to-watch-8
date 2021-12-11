@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import { useDispatch } from 'react-redux';
-
 import { useHistory } from 'react-router';
-import { getAvatar } from '../../../../services/auth-info';
-import { logoutAction } from '../../../../store/api-actions';
+
+import { getAvatar, removeAvatar, removeToken } from '../../../../services/auth-info';
+import { logout } from '../../../../store/user-slice/user-slice';
 import { AppRoute } from '../../../../const';
 
 
@@ -20,7 +20,9 @@ function UserAuth(): JSX.Element {
 
   const handleSignOutClick = (evt: MouseEvent) => {
     evt.preventDefault();
-    dispatch(logoutAction());
+    dispatch(logout());
+    removeAvatar();
+    removeToken();
   };
 
   return (

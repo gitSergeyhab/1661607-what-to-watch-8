@@ -33,6 +33,20 @@ const ReviewLength = {
   Max: 400,
 };
 
+const ErrorMessage = {
+  Login: 'unable to log in',
+  Logout: 'unable to log out',
+  FetchFilms: 'unable to upload films',
+  FetchPromo: 'unable to upload promo movie',
+  FetchSimilar: 'unable to upload similar movies',
+  FetchMovie: 'unable to upload this movie',
+  FetchComments: 'unable to upload comments',
+  FetchFavorite: 'unable to upload your movie list',
+  PostComment: 'unable to send comment',
+  PostFavorite: 'unable to change my list status',
+  CheckAuthStatus: 'unable to check your status',
+};
+
 export {
   AppRoute,
   BtnLocation,
@@ -40,5 +54,6 @@ export {
   ReviewLength,
   ALL_GENRES,
   MAX_GENRE_NUMBER,
-  STARS_COUNT
+  STARS_COUNT,
+  ErrorMessage
 };

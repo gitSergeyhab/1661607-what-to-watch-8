@@ -6,22 +6,17 @@ import { configureStore } from '@reduxjs/toolkit';
 import { ToastContainer } from 'react-toastify';
 
 import App from './components/app/app';
-import { createAPI } from './services/api';
-import { requireLogout } from './store/action';
-import { checkAuthStatus, fetchFilmsAction, fetchPromoAction } from './store/api-actions';
 import { rootReducer } from './store/root-reducer';
+import { queryApi } from './services/query-api';
 
+import 'react-toastify/dist/ReactToastify.css';
 
-const api = createAPI(() => store.dispatch(requireLogout()));
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({thunk: {extraArgument: api}}),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(queryApi.middleware),
 });
 
-store.dispatch(checkAuthStatus());
-store.dispatch(fetchPromoAction());
-store.dispatch(fetchFilmsAction());
 
 ReactDOM.render(
   <BrowserRouter>

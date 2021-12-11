@@ -1,37 +1,28 @@
 import { useParams } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
 
 import AddReviewHeader from '../header/add-review-header/add-review-header';
 import CommentForm from '../comment-form/comment-form';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Spinner from '../spinner/spinner';
-import { fetchMovieAction } from '../../store/api-actions';
-import { getMovie } from '../../store/movie-data/movie-data-selectors';
-import { getMovieErrorStatus } from '../../store/error-status/error-status-selectors';
+import { useGetOneFilmQuery } from '../../services/query-api';
+import { adaptFilmToClient } from '../../services/adapters';
 
 
 function AddReview({authorizationStatus}: {authorizationStatus: boolean}): JSX.Element {
 
   const {id}: {id: string} = useParams();
 
-  const film = useSelector(getMovie);
-  const error = useSelector(getMovieErrorStatus);
+  const {data, isFetching, isError} = useGetOneFilmQuery(id);
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchMovieAction(id));
-  }, [dispatch, id]);
-
-  if (error) {
+  if (isError) {
     return <NotFoundPage authorizationStatus={authorizationStatus}/>;
   }
 
-  if (!film) {
+  if (!data || isFetching) {
     return <Spinner/>;
   }
 
+  const film = adaptFilmToClient(data);
   const {name, backgroundImage, posterImage} = film;
 
   return (

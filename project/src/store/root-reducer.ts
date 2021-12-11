@@ -1,26 +1,14 @@
 import { combineReducers } from 'redux';
+import { queryApi } from '../services/query-api';
 
-import { errorStatus } from './error-status/error-status';
-import { favoriteData } from './favorite-data/favorite-data';
-import { mainData } from './main-data/main-data';
-import { movieData } from './movie-data/movie-data';
-import { userData } from './user-data/user-data';
+import { mainSlice } from './main-slice/main-slice';
+import { userSlice } from './user-slice/user-slice';
 
-
-export const enum ReducerName {
-  MainData = 'MainData',
-  MovieData = 'MovieData',
-  FavoriteData = 'FavoriteData',
-  UserData = 'UserData',
-  ErrorStatus= 'ErrorStatus',
-}
 
 export const rootReducer = combineReducers({
-  [ReducerName.MainData]: mainData,
-  [ReducerName.MovieData]: movieData,
-  [ReducerName.FavoriteData]: favoriteData,
-  [ReducerName.UserData]: userData,
-  [ReducerName.ErrorStatus]: errorStatus,
+  [queryApi.reducerPath]: queryApi.reducer,
+  [mainSlice.name]: mainSlice.reducer,
+  [userSlice.name]: userSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

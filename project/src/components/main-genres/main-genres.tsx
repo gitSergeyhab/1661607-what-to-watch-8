@@ -1,6 +1,6 @@
 import { MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
-import { getGenres } from '../../store/main-data/main-data-selectors';
+import { getGenres } from '../../store/main-slice/main-slice-selector';
 
 type MainGenresProps = {
   selectedGenre: string,

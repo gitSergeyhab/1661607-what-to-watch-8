@@ -1,35 +1,25 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-
 import FilmList from '../film-list/film-list';
 import Footer from '../footer/footer';
 import MyListHeader from '../header/my-list-header/my-list-header';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Spinner from '../spinner/spinner';
-import { fetchFavoritesAction } from '../../store/api-actions';
-import { getFavorites, getFavoritesLoadedStatus } from '../../store/favorite-data/favorite-data-selector';
-import { getFavoriteErrorStatus } from '../../store/error-status/error-status-selectors';
+import { useGetFavoritesQuery } from '../../services/query-api';
+import { adaptFilmToClient } from '../../services/adapters';
 
 
 function MyList(): JSX.Element {
 
-  const favorites = useSelector(getFavorites);
-  const areFavoritesLoaded = useSelector(getFavoritesLoadedStatus);
-  const error = useSelector(getFavoriteErrorStatus);
+  const {data, isError, isFetching} = useGetFavoritesQuery('');
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchFavoritesAction());
-  }, [dispatch]);
-
-  if (error) {
+  if (isError) {
     return <NotFoundPage authorizationStatus/>;
   }
 
-  if (!areFavoritesLoaded) {
+  if (isFetching) {
     return <Spinner/>;
   }
+
+  const favorites = data.map(adaptFilmToClient);
 
   const emptyList = <p style={{margin: 'auto'}}>Your List is Empty</p>;
   const myList = favorites && favorites.length ? <FilmList films={favorites}/> : emptyList;

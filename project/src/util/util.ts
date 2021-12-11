@@ -58,7 +58,6 @@ const disableReviewBtn = (comment: string, stars: number): boolean => {
   if (comment.length >= ReviewLength.Min && comment.length <= ReviewLength.Max && stars > 0) {
     return false;
   }
-
   return true;
 };
 
@@ -70,6 +69,7 @@ const getReviewDateFormat = (date: string): string =>  new Date(date).toLocaleSt
 const getFilmsByGenre = (films: Film[], genre: string): Film[] => genre && genre !== ALL_GENRES ? films.filter((film) => film.genre === genre) : films;
 
 const getGenreList = (films: Film[]): string[] => [ALL_GENRES, ...getUniqueFilmGenres(films).slice(0, MAX_GENRE_NUMBER)];
+
 
 export {
   getScoreDescription,

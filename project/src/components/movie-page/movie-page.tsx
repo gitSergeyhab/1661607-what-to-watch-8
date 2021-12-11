@@ -1,6 +1,4 @@
 import { useParams} from 'react-router-dom';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import BtnMyList from '../btns/btn-my-list/btn-my-list';
 import BtnPlayer from '../btns/btn-player/btn-player';
@@ -11,9 +9,8 @@ import MoviePageSimilar from '../movie-page-similar/movie-page-similar';
 import MoviePageInfoBlock from '../movie-page-info-block/movie-page-info-block';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Spinner from '../spinner/spinner';
-import { fetchCommentAction, fetchMovieAction, fetchSimilarAction } from '../../store/api-actions';
-import { getComments, getMovie, getMovieLoadedStatus } from '../../store/movie-data/movie-data-selectors';
-import { getMovieErrorStatus } from '../../store/error-status/error-status-selectors';
+import { useGetCommentsQuery, useGetOneFilmQuery } from '../../services/query-api';
+import { adaptFilmToClient } from '../../services/adapters';
 import { BtnLocation } from '../../const';
 
 
@@ -23,31 +20,20 @@ function MoviePage({authorizationStatus}: MainPageProps): JSX.Element {
 
   const {id}: {id: string} = useParams();
 
-  const dispatch = useDispatch();
-
-  const film = useSelector(getMovie);
-  const comments = useSelector(getComments);
-  const error = useSelector(getMovieErrorStatus);
-  const isMovieLoaded = useSelector(getMovieLoadedStatus);
+  const {data, isLoading, isError} = useGetOneFilmQuery(id);
+  const {data: comments} = useGetCommentsQuery(id);
 
 
-  useEffect(() => {
-    dispatch(fetchMovieAction(id));
-    dispatch(fetchCommentAction(id));
-    dispatch(fetchSimilarAction(id));
-  }, [dispatch, id]);
-
-
-  if (error) {
+  if (isError) {
     return <NotFoundPage authorizationStatus={authorizationStatus}/>;
   }
 
-  if (!film || !isMovieLoaded) {
+  if (!data || isLoading) {
     return <Spinner/>;
   }
 
+  const film = adaptFilmToClient(data);
   const {name, genre, released, posterImage, backgroundImage, isFavorite} = film;
-
 
   return (
     <>
@@ -99,7 +85,7 @@ function MoviePage({authorizationStatus}: MainPageProps): JSX.Element {
 
       <div className="page-content">
 
-        <MoviePageSimilar/>
+        <MoviePageSimilar id={film.id}/>
 
         <Footer/>
 

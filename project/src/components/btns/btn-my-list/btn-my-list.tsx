@@ -1,8 +1,7 @@
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-
-import { postFilmStatusAction } from '../../../store/api-actions';
-import { AppRoute, BtnLocation } from '../../../const';
+import { AppRoute, BtnLocation, ErrorMessage } from '../../../const';
+import { usePostStatusMutation } from '../../../services/query-api';
+import { toast } from 'react-toastify';
 
 
 const LinkHref = {
@@ -14,14 +13,18 @@ type MyBtnProps = {authorizationStatus: boolean, id: number, isFavorite: boolean
 
 function BtnMyList({authorizationStatus, id, isFavorite, location}: MyBtnProps): JSX.Element {
 
-  const dispatch = useDispatch();
   const history = useHistory();
 
+  const [changeStatus] = usePostStatusMutation();
 
-  const handleBtnClick = () => {
+  const handleBtnClick = async() => {
     if (authorizationStatus) {
       const status = isFavorite ? 0 : 1;
-      dispatch(postFilmStatusAction({id, status, location}));
+      try {
+        await changeStatus({id, status}).unwrap();
+      } catch {
+        toast.error(ErrorMessage.PostFavorite);
+      }
     } else {
       history.push(AppRoute.SignIn);
     }

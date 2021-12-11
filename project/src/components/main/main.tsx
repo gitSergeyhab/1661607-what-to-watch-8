@@ -1,35 +1,41 @@
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import MainBottom from '../main-bottom/main-bottom';
 import MainPromo from '../main-promo/main-promo';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Spinner from '../spinner/spinner';
-import { getFilmsLoadedStatus, getFilms, getPromo } from '../../store/main-data/main-data-selectors';
-import { getMainErrorStatus } from '../../store/error-status/error-status-selectors';
+import { useGetFilmsQuery } from '../../services/query-api';
+import { adaptFilmToClient } from '../../services/adapters';
+import { useEffect } from 'react';
+import { setGenres } from '../../store/main-slice/main-slice';
 
 
 type MainProps = {authorizationStatus: boolean}
 
 function Main({authorizationStatus}: MainProps): JSX.Element {
 
-  const promo = useSelector(getPromo);
-  const films = useSelector(getFilms);
-  const error = useSelector(getMainErrorStatus);
-  const areFilmsLoaded = useSelector(getFilmsLoadedStatus);
+  const {data, isError, isFetching, isLoading} = useGetFilmsQuery('');
 
-  if (error) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (data) { dispatch(setGenres(data)); }
+  }, [data, dispatch]);
+
+
+  if (isError) {
     return <NotFoundPage authorizationStatus={authorizationStatus}/>;
   }
 
-  if (!areFilmsLoaded) {
+  if (isLoading || isFetching) {
     return <Spinner/>;
   }
 
-  const promoBlock = promo ? <MainPromo authorizationStatus={authorizationStatus} promo={promo}/> : null;
+  const films = data.map(adaptFilmToClient);
 
   return (
     <>
-      {promoBlock}
+      <MainPromo authorizationStatus={authorizationStatus} />
       <MainBottom films={films}/>
     </>
   );

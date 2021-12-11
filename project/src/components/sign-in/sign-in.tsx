@@ -1,13 +1,19 @@
 import { FormEvent, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
+import { toast } from 'react-toastify';
 
 import SignInHeader from '../header/sign-in-header/sign-in-header';
 import Spinner from '../spinner/spinner';
-import { loginAction } from '../../store/api-actions';
-import { getAuthVerifiedStatus } from '../../store/user-data/user-data-selectors';
+import { getAuthVerifiedStatus } from '../../store/user-slice/user-slice-selectors';
 import { checkEmail, checkPassword } from '../../util/util';
-import { AppRoute } from '../../const';
+import { usePostLoginMutation } from '../../services/query-api';
+import { saveAvatar, saveToken } from '../../services/auth-info';
+import { login, logout } from '../../store/user-slice/user-slice';
+import { AppRoute, ErrorMessage } from '../../const';
+
+
+const AVATAR_URL = 'avatar_url';
 
 
 const ErrorElement = {
@@ -25,6 +31,7 @@ function SignIn({authorizationStatus} : {authorizationStatus: boolean}): JSX.Ele
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
+  const [postLogin] = usePostLoginMutation();
 
   const [error, setError] = useState(ErrorElement.NoError);
 
@@ -37,7 +44,8 @@ function SignIn({authorizationStatus} : {authorizationStatus: boolean}): JSX.Ele
     return <Spinner/>;
   }
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (emailRef.current && passwordRef.current) {
       const email = emailRef.current.value;
@@ -47,7 +55,16 @@ function SignIn({authorizationStatus} : {authorizationStatus: boolean}): JSX.Ele
       } else if (!checkPassword(password)) {
         setError(ErrorElement.Password);
       } else {
-        dispatch(loginAction({email, password}));
+        try {
+          const result = await postLogin({email, password}).unwrap();
+          const {token, [AVATAR_URL]: avatar} = result;
+          saveToken(token);
+          saveAvatar(avatar);
+          dispatch(login());
+        } catch {
+          dispatch(logout());
+          toast.error(ErrorMessage.Login);
+        }
       }
     }
   };
